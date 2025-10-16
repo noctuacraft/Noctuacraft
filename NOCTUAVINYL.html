@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOCTUAVINYL - Donde los bits encuentran el surco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --negro: #000000;
+            --magenta: #FF00FF;
+            --cian: #00FFFF;
+            --blanco: #FFFFFF;
+            --gris: #1A1A1A;
+            --cafe: #8B4513;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--negro);
+            color: var(--blanco);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 0, 255, 0.05) 2px, rgba(255, 0, 255, 0.05) 4px);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--magenta);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.1), transparent);
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--magenta), var(--cian));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            position: relative;
+        }
+
+        .logo::after {
+            content: "🦆";
+            position: absolute;
+            top: -5px;
+            right: -25px;
+            font-size: 1.2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cian);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-icon, .cart-icon, .user-icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--magenta);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-icon:hover, .cart-icon:hover, .user-icon:hover {
+            color: var(--magenta);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 80vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: contrast(1.2) saturate(1.5);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 255, 0.2));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--magenta), var(--cian));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            5% { transform: translate(-2px, 2px); }
+            10% { transform: translate(2px, -2px); }
+            15% { transform: translate(-2px, -2px); }
+            20% { transform: translate(2px, 2px); }
+            25% { transform: translate(0); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--blanco);
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--magenta);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 15px 20px;
+            background: transparent;
+            border: none;
+            color: var(--blanco);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-bar button {
+            background: var(--magenta);
+            color: var(--blanco);
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: var(--cian);
+        }
+
+        /* GÉNEROS SECTION */
+        .generos {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--magenta), var(--cian));
+        }
+
+        .generos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .genero-card {
+            background: rgba(26, 26, 26, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .genero-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
+            border-color: var(--magenta);
+        }
+
+        .genero-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .genero-card:hover::before {
+            opacity: 1;
+        }
+
+        .genero-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .genero-content {
+            padding: 20px;
+        }
+
+        .genero-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--blanco);
+        }
+
+        .genero-count {
+            color: var(--cian);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .wave-animation {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            background: var(--magenta);
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+
+        .genero-card:hover .wave-bar:nth-child(1) { height: 5px; }
+        .genero-card:hover .wave-bar:nth-child(2) { height: 15px; }
+        .genero-card:hover .wave-bar:nth-child(3) { height: 25px; }
+        .genero-card:hover .wave-bar:nth-child(4) { height: 15px; }
+        .genero-card:hover .wave-bar:nth-child(5) { height: 5px; }
+
+        /* JOYA DE LA SEMANA */
+        .joya-semana {
+            padding: 100px 0;
+            background: rgba(255, 0, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .joya-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .joya-video {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .joya-video video {
+            width: 100%;
+            display: block;
+        }
+
+        .joya-info {
+            padding: 20px;
+        }
+
+        .joya-badge {
+            display: inline-block;
+            background: var(--magenta);
+            color: var(--blanco);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        .joya-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--blanco);
+        }
+
+        .joya-artist {
+            font-size: 1.2rem;
+            color: var(--cian);
+            margin-bottom: 20px;
+        }
+
+        .joya-details {
+            margin-bottom: 30px;
+        }
+
+        .joya-detail {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+            color: var(--magenta);
+        }
+
+        .pulse-button {
+            background: var(--magenta);
+            color: var(--blanco);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 0, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+
+        .pulse-button:hover {
+            background: var(--cian);
+            animation: none;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+        }
+
+        /* COMUNIDAD */
+        .comunidad {
+            padding: 100px 0;
+        }
+
+        .comunidad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .comunidad-card {
+            background: rgba(26, 26, 26, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .comunidad-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--cian);
+            text-align: center;
+        }
+
+        .activity-feed {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--magenta);
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .stars {
+            color: var(--cian);
+            margin-top: 5px;
+        }
+
+        .event-list {
+            list-style: none;
+        }
+
+        .event-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            color: var(--magenta);
+            font-weight: bold;
+        }
+
+        /* BLOG */
+        .blog {
+            padding: 100px 0;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: rgba(26, 26, 26, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .blog-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--blanco);
+        }
+
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--cian);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .read-more::after {
+            content: "→";
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--gris);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--magenta);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--cian);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--magenta);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--magenta);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--gris);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid var(--magenta);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--blanco);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .coffee-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--cafe);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .joya-container {
+                grid-template-columns: 1fr;
+            }
+
+            .generos-grid, .comunidad-grid, .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MODAL DE BÚSQUEDA -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3>Buscar en NOCTUAVINYL</h3>
+            <div class="search-bar" style="margin: 20px 0;">
+                <input type="text" placeholder="Artista, álbum, género...">
+                <button>BUSCAR</button>
+            </div>
+            <div id="searchResults">
+                <!-- Los resultados aparecerán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN DE CAFÉ -->
+    <div id="coffeeNotification" class="coffee-notification">
+        ☕ ¡Café de Noctuacraft listo! 🦆
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">NOCTUAVINYL</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Catálogo</a></li>
+                        <li><a href="#">Géneros</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-icon" id="searchBtn">🔍</div>
+                    <div class="cart-icon" id="cartBtn">
+                        🛒
+                        <span class="cart-count">0</span>
+                    </div>
+                    <div class="user-icon" id="userBtn">👤</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-woman-looking-through-vinyl-records-41455-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">NOCTUAVINYL</h1>
+            <p class="hero-subtitle">Donde los bits encuentran el surco</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Busca por artista, género o año..." id="mainSearch">
+                <button id="mainSearchBtn">BUSCAR</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GÉNEROS SECTION -->
+    <section class="generos container">
+        <h2 class="section-title">Explora Géneros</h2>
+        <div class="generos-grid">
+            <!-- Synthwave -->
+            <div class="genero-card" data-genre="synthwave">
+                <div class="genero-image" style="background-image: url('https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="genero-content">
+                    <h3 class="genero-title">Synthwave</h3>
+                    <div class="genero-count">42 pressings raros</div>
+                    <div class="wave-animation">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <button class="pulse-button sample-btn" data-sample="synthwave">ESCUCHAR SAMPLE</button>
+                </div>
+            </div>
+
+            <!-- Post-Punk -->
+            <div class="genero-card" data-genre="postpunk">
+                <div class="genero-image" style="background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="genero-content">
+                    <h3 class="genero-title">Post-Punk</h3>
+                    <div class="genero-count">38 pressings raros</div>
+                    <div class="wave-animation">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <button class="pulse-button sample-btn" data-sample="postpunk">ESCUCHAR SAMPLE</button>
+                </div>
+            </div>
+
+            <!-- Boom Bap -->
+            <div class="genero-card" data-genre="boombap">
+                <div class="genero-image" style="background-image: url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="genero-content">
+                    <h3 class="genero-title">Boom Bap</h3>
+                    <div class="genero-count">55 pressings raros</div>
+                    <div class="wave-animation">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <button class="pulse-button sample-btn" data-sample="boombap">ESCUCHAR SAMPLE</button>
+                </div>
+            </div>
+
+            <!-- Afrobeat -->
+            <div class="genero-card" data-genre="afrobeat">
+                <div class="genero-image" style="background-image: url('https://images.unsplash.com/photo-1511735111819-9a3f7709049c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="genero-content">
+                    <h3 class="genero-title">Afrobeat</h3>
+                    <div class="genero-count">29 pressings raros</div>
+                    <div class="wave-animation">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <button class="pulse-button sample-btn" data-sample="afrobeat">ESCUCHAR SAMPLE</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOYA DE LA SEMANA -->
+    <section class="joya-semana">
+        <div class="container">
+            <h2 class="section-title">La Joya de la Semana</h2>
+            <div class="joya-container">
+                <div class="joya-video">
+                    <video autoplay muted loop>
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-someone-unwrapping-a-vinyl-record-41559-large.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="joya-info">
+                    <span class="joya-badge">EDICIÓN LIMITADA</span>
+                    <h3 class="joya-title">Random Access Memories</h3>
+                    <p class="joya-artist">Daft Punk</p>
+                    <div class="joya-details">
+                        <div class="joya-detail">
+                            <span class="detail-label">Press:</span>
+                            <span>180g Clear Vinyl</span>
+                        </div>
+                        <div class="joya-detail">
+                            <span class="detail-label">Número:</span>
+                            <span>#248/500</span>
+                        </div>
+                        <div class="joya-detail">
+                            <span class="detail-label">Año:</span>
+                            <span>2023 Remaster</span>
+                        </div>
+                        <div class="joya-detail">
+                            <span class="detail-label">Precio:</span>
+                            <span>$89.99</span>
+                        </div>
+                    </div>
+                    <button class="pulse-button" id="addToCartBtn">AGREGAR AL CARRITO</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMUNIDAD -->
+    <section class="comunidad container">
+        <h2 class="section-title">Comunidad Viva</h2>
+        <div class="comunidad-grid">
+            <div class="comunidad-card">
+                <h3 class="comunidad-title">Actividad Reciente</h3>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="activity-item">
+                        <span class="user-avatar"></span>
+                        <strong>@ana_vinyl</strong> acaba de agregar <em>Miles Davis - Kind of Blue</em> a su colección
+                    </div>
+                    <div class="activity-item">
+                        <span class="user-avatar"></span>
+                        <strong>@crate_digger</strong> está escuchando <em>Kraftwerk - Computer World</em>
+                    </div>
+                    <div class="activity-item">
+                        <span class="user-avatar"></span>
+                        <strong>@synth_lover</strong> acaba de comprar <em>Chromatics - Kill For Love</em>
+                    </div>
+                    <div class="activity-item">
+                        <span class="user-avatar"></span>
+                        <strong>@postpunk_pete</strong> agregó una reseña de <em>Joy Division - Unknown Pleasures</em>
+                        <div class="stars">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comunidad-card">
+                <h3 class="comunidad-title">Próximos Eventos</h3>
+                <ul class="event-list">
+                    <li class="event-item">
+                        <div class="event-date">15 OCT • 19:00</div>
+                        <div>Charla con DJ Shadow: Sampling & Vinyl Culture</div>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-date">22 OCT • 20:30</div>
+                        <div>Listening Party: Nuevos Lanzamientos de Warp Records</div>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-date">29 OCT • 18:00</div>
+                        <div>Workshop: Cuidado y Mantenimiento de Vinilos</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="blog container">
+        <h2 class="section-title">The Crate Digger</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Guía Definitiva para Empezar Tu Colección</h3>
+                    <p class="blog-excerpt">Todo lo que necesitás saber antes de sumergirte en el mundo del vinilo, desde equipos básicos hasta cómo detectar pressings valiosos.</p>
+                    <a href="#" class="read-more">Leer más</a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Los 5 Pressings Más Buscados del 2024</h3>
+                    <p class="blog-excerpt">Descubrí las ediciones limitadas que todos los coleccionistas están persiguiendo este año y por qué valen cada dólar.</p>
+                    <a href="#" class="read-more">Leer más</a>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Synthwave: La Resurrección del Sonido Analógico</h3>
+                    <p class="blog-excerpt">Cómo un género nacido en internet está impulsando el renacimiento de los sintetizadores vintage y el formato vinilo.</p>
+                    <a href="#" class="read-more">Leer más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>NOCTUAVINYL</h3>
+                    <p>Donde los bits encuentran el surco. Tu templo para coleccionistas y curiosos.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">📱</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">📺</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Catálogo</a></li>
+                        <li><a href="#">Géneros</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ayuda</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Envíos</a></li>
+                        <li><a href="#">Devoluciones</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li>Av. del Vinilo 123</li>
+                        <li>Buenos Aires, Argentina</li>
+                        <li>info@noctuavinyl.com</li>
+                        <li>+54 11 1234-5678</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> NOCTUAVINYL. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Año actual para el copyright
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Variables globales
+        let cartCount = 0;
+        const cartCountElement = document.querySelector('.cart-count');
+
+        // Modal de búsqueda
+        const searchBtn = document.getElementById('searchBtn');
+        const searchModal = document.getElementById('searchModal');
+        const closeModal = document.querySelector('.close-modal');
+        const mainSearchBtn = document.getElementById('mainSearchBtn');
+
+        searchBtn.addEventListener('click', () => {
+            searchModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            searchModal.style.display = 'none';
+        });
+
+        mainSearchBtn.addEventListener('click', () => {
+            const searchTerm = document.getElementById('mainSearch').value;
+            if (searchTerm) {
+                alert(`🔍 Buscando: "${searchTerm}"`);
+                searchModal.style.display = 'flex';
+                document.querySelector('#searchModal input').value = searchTerm;
+            }
+        });
+
+        // Funcionalidad del carrito
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        
+        addToCartBtn.addEventListener('click', () => {
+            cartCount++;
+            cartCountElement.textContent = cartCount;
+            
+            // Efecto visual en el icono del carrito
+            const cartIcon = document.getElementById('cartBtn');
+            cartIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
+            
+            // Mostrar notificación de café después de 3 compras
+            if (cartCount === 3) {
+                setTimeout(() => {
+                    const coffeeNotification = document.getElementById('coffeeNotification');
+                    coffeeNotification.style.display = 'flex';
+                    setTimeout(() => {
+                        coffeeNotification.style.display = 'none';
+                    }, 5000);
+                }, 1000);
+            }
+            
+            alert('✅ "Random Access Memories" agregado al carrito!');
+        });
+
+        // Samples de audio interactivos
+        const sampleButtons = document.querySelectorAll('.sample-btn');
+        
+        sampleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const genre = this.getAttribute('data-sample');
+                const samples = {
+                    synthwave: "🎹 Synthesizers atmosféricos y beats nostálgicos...",
+                    postpunk: "🎸 Guitarras angulares y ritmos post-punk...", 
+                    boombap: "🎤 Beats clásicos de hip-hop y sampling...",
+                    afrobeat: "🥁 Ritmos africanos y percusión compleja..."
+                };
+                
+                // Efecto visual en la tarjeta
+                const card = this.closest('.genero-card');
+                card.style.boxShadow = '0 0 30px ' + (genre === 'synthwave' ? 'var(--magenta)' : 
+                                      genre === 'postpunk' ? 'var(--cian)' : 
+                                      genre === 'boombap' ? '#FF6B6B' : '#4ECDC4');
+                
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 2000);
+                
+                alert(`🎵 Reproduciendo sample de ${genre.toUpperCase()}:\n${samples[genre]}`);
+            });
+        });
+
+        // Feed de actividad en tiempo real (simulado)
+        const activityFeed = document.getElementById('activityFeed');
+        const activities = [
+            "acaba de comprar Aphex Twin - Selected Ambient Works",
+            "está escuchando Talking Heads - Remain in Light", 
+            "agregó una reseña de Massive Attack - Mezzanine",
+            "compartió su colección de vinyl japonés",
+            "encontró un pressing raro de Radiohead"
+        ];
+        const users = ["@vinyl_collector", "@music_nerd", "@analog_lover", "@crate_digger", "@noctua_fan"];
+
+        setInterval(() => {
+            const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+            const randomUser = users[Math.floor(Math.random() * users.length)];
+            
+            const newActivity = document.createElement('div');
+            newActivity.className = 'activity-item';
+            newActivity.innerHTML = `
+                <span class="user-avatar"></span>
+                <strong>${randomUser}</strong> ${randomActivity}
+            `;
+            
+            activityFeed.insertBefore(newActivity, activityFeed.firstChild);
+            
+            // Mantener máximo 6 actividades
+            if (activityFeed.children.length > 6) {
+                activityFeed.removeChild(activityFeed.lastChild);
+            }
+        }, 10000);
+
+        // Efecto de escritura para el título
+        const heroTitle = document.querySelector('.hero-title');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                heroTitle.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // Easter egg: Konami code
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join() === konamiSequence.join()) {
+                alert('🎮 ¡Código Konami activado! 15% DE DESCUENTO en tu próxima compra! 🦆');
+                konamiCode = [];
+            }
+        });
+
+        // Iniciar efectos después de que la página cargue
+        window.addEventListener('load', () => {
+            typeWriter();
+            
+            // Mostrar mensaje de bienvenida
+            setTimeout(() => {
+                console.log('🦆 ¡Bienvenido a NOCTUAVINYL! ☕');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
