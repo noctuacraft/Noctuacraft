@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noctuacoffee - Café & Ritual</title>
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --negro: #1A1A1A;
+            --blanco-hueso: #F5F1E8;
+            --tierra: #8B4513;
+            --verde-musgo: #556B2F;
+            --madera: #D2691E;
+            --dorado: #C9A96E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--negro);
+            color: var(--blanco-hueso);
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* BANNER URGENTE */
+        .banner-urgente {
+            background: linear-gradient(90deg, var(--tierra), var(--dorado));
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-urgente p {
+            animation: slideText 15s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes slideText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* BARRA SUPERIOR */
+        .top-bar {
+            background: var(--negro);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .location-badge {
+            background: var(--tierra);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dorado);
+        }
+
+        /* HERO MEJORADO */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(139, 69, 19, 0.3));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            background: var(--dorado);
+            color: var(--negro);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            color: var(--blanco-hueso);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: var(--blanco-hueso);
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .feature-icon {
+            color: var(--dorado);
+            font-size: 1.2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: var(--tierra);
+            color: var(--blanco-hueso);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 3px;
+        }
+
+        .cta-button.primary {
+            background: var(--dorado);
+            color: var(--negro);
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* OFERTA ESPECIAL */
+        .oferta-especial {
+            background: linear-gradient(135deg, var(--negro) 0%, var(--tierra) 100%);
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oferta-badge {
+            background: var(--dorado);
+            color: var(--negro);
+            padding: 5px 15px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .oferta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .precio {
+            font-size: 3rem;
+            color: var(--dorado);
+            margin: 1rem 0;
+        }
+
+        .precio-anterior {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 1.5rem;
+        }
+
+        .contador {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .contador-item {
+            background: var(--blanco-hueso);
+            color: var(--negro);
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 60px;
+        }
+
+        .contador-numero {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* TESTIMONIOS */
+        .testimonios {
+            padding: 80px 0;
+            background: var(--blanco-hueso);
+            color: var(--negro);
+        }
+
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonio {
+            background: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .testimonio::before {
+            content: "";
+            font-size: 4rem;
+            color: var(--tierra);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .testimonio-cliente {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cliente-foto {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--tierra);
+        }
+
+        /* INSTAGRAM FEED */
+        .instagram-feed {
+            padding: 80px 0;
+        }
+
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feed-item {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            cursor: none;
+        }
+
+        .feed-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .feed-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .feed-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 69, 19, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feed-item:hover .feed-overlay {
+            opacity: 1;
+        }
+
+        /* CTA FINAL */
+        .cta-final {
+            background: linear-gradient(135deg, var(--tierra) 0%, var(--negro) 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-final h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-final p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* WhatsApp flotante MEJORADO */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            cursor: none;
+            animation: whatsappPulse 2s infinite;
+        }
+
+        @keyframes whatsappPulse {
+            0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.8); }
+            100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Efectos de aparición al scrollear */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cursor personalizado */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--tierra);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        @media (hover: hover) {
+            body:hover .custom-cursor {
+                display: block;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .top-bar-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor personalizado -->
+    <div class="custom-cursor"></div>
+
+    <!-- BANNER URGENTE -->
+    <div class="banner-urgente">
+        <p>🚀 ¡ABIEROS AHORA! - Happy Hour: 15% OFF en métodos de preparación de 16 a 19hs - 🚀</p>
+    </div>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="location-badge">
+                📍 Palermo Soho - Abiertos hasta 22:00
+            </div>
+            <div class="social-proof">
+                <div class="rating">
+                    ⭐⭐⭐⭐⭐ 4.9 (248 reviews)
+                </div>
+                <div class="wifi">
+                    📶 WiFi gratis
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO MEJORADO -->
+    <section class="hero">
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-coffee-beans-17279-large.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                🏆 Mejor Café de Especialidad 2025
+            </div>
+            <h1 class="fade-in">Noctuacoffee</h1>
+            <p class="hero-subtitle fade-in">El ritual del café que te hace sentir en casa</p>
+            
+            <div class="hero-features fade-in">
+                <div class="feature">
+                    <span class="feature-icon">☕</span>
+                    <span>+15 cafés de origen único</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🏠</span>
+                    <span>Ambiente work-friendly</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🌱</span>
+                    <span>Granos tostados en el día</span>
+                </div>
+            </div>
+            
+            <div class="cta-buttons fade-in">
+                <button class="cta-button primary">Ver Menú Completo</button>
+                <button class="cta-button">Reservar Mesa</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFERTA ESPECIAL -->
+    <section class="oferta-especial">
+        <div class="container oferta-content">
+            <div class="oferta-badge">OFERTA EXCLUSIVA ONLINE</div>
+            <h2 class="fade-in">Experiencia Noctuacoffee Completa</h2>
+            <p class="fade-in">Cata guiada + Café de origen + Medialuna artesanal</p>
+            
+            <div class="precio fade-in">
+                $1.800 <span class="precio-anterior">$2.400</span>
+            </div>
+            
+            <div class="contador fade-in">
+                <div class="contador-item">
+                    <div class="contador-numero" id="horas">12</div>
+                    <div>Horas</div>
+                </div>
+                <div class="contador-item">
+                    <div class="contador-numero" id="minutos">45</div>
+                    <div>Minutos</div>
+                </div>
+                <div class="contador-item">
+                    <div class="contador-numero" id="segundos">30</div>
+                    <div>Segundos</div>
+                </div>
+            </div>
+            
+            <button class="cta-button primary fade-in">Reservar Oferta</button>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="testimonios container">
+        <h2 class="section-title fade-in">Lo que dicen nuestros clientes</h2>
+        <p class="section-subtitle fade-in">No lo decimos nosotros, lo dice la comunidad</p>
+        
+        <div class="testimonios-grid">
+            <div class="testimonio fade-in">
+                <p>"El mejor café que probé en Buenos Aires. El ambiente es increíble para trabajar y el personal super amable."</p>
+                <div class="testimonio-cliente">
+                    <div class="cliente-foto"></div>
+                    <div>
+                        <strong>Ana Rodríguez</strong>
+                        <div>⭐️⭐️⭐️⭐️⭐️</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonio fade-in">
+                <p>"La cata guiada fue una experiencia única. Aprendí más sobre café en una hora que en toda mi vida."</p>
+                <div class="testimonio-cliente">
+                    <div class="cliente-foto"></div>
+                    <div>
+                        <strong>Martín López</strong>
+                        <div>⭐️⭐️⭐️⭐️⭐️</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonio fade-in">
+                <p>"Ideal para reuniones de trabajo. Buen WiFi, enchufes everywhere y el café es de otro planeta."</p>
+                <div class="testimonio-cliente">
+                    <div class="cliente-foto"></div>
+                    <div>
+                        <strong>Carolina Méndez</strong>
+                        <div>⭐️⭐️⭐️⭐️⭐️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTAGRAM FEED -->
+    <section class="instagram-feed container">
+        <h2 class="section-title fade-in">Seguinos en Instagram</h2>
+        <p class="section-subtitle fade-in">@Noctuacoffee • Momentos reales de nuestra comunidad</p>
+        
+        <div class="feed-grid">
+            <div class="feed-item fade-in">
+                <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Café en Noctuacoffee">
+                <div class="feed-overlay">
+                    <span>❤️ 248</span>
+                </div>
+            </div>
+            <div class="feed-item fade-in">
+                <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Trabajando en Noctuacoffee">
+                <div class="feed-overlay">
+                    <span>❤️ 189</span>
+                </div>
+            </div>
+            <div class="feed-item fade-in">
+                <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Barista en acción">
+                <div class="feed-overlay">
+                    <span>❤️ 312</span>
+                </div>
+            </div>
+            <div class="feed-item fade-in">
+                <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Granos de café">
+                <div class="feed-overlay">
+                    <span>❤️ 156</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final">
+        <div class="container">
+            <h2 class="fade-in">¿Qué estás esperando?</h2>
+            <p class="fade-in">Vení a vivir la experiencia Noctuacoffee. Tu nuevo lugar de trabajo, encuentro y ritual del café te está esperando.</p>
+            <div class="cta-buttons fade-in">
+                <button class="cta-button primary">Ver Cómo Llegar</button>
+                <button class="cta-button">Llamanos Ahora</button>
+            </div>
+        </div>
+    </section>
+
+                </div>
+            <p class="copyright">
+                &copy; <span id="year"></span> Noctuacraft. Todos los derechos reservados.
+            </p>
+        </div>
+
+    <!-- WhatsApp flotante MEJORADO -->
+    <a href="https://wa.me/5491112345678?text=¡Hola!%20Quiero%20reservar%20una%20mesa%20en%20Noctuacoffee" class="whatsapp-float" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <script>
+                // Año actual para el copyright
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animación al scrollear
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Contador regresivo
+            function actualizarContador() {
+                const ahora = new Date();
+                const manana = new Date();
+                manana.setDate(ahora.getDate() + 1);
+                manana.setHours(0, 0, 0, 0);
+                
+                const diferencia = manana - ahora;
+                
+                const horas = Math.floor(diferencia / (1000 * 60 * 60));
+                const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+                
+                document.getElementById('horas').textContent = horas.toString().padStart(2, '0');
+                document.getElementById('minutos').textContent = minutos.toString().padStart(2, '0');
+                document.getElementById('segundos').textContent = segundos.toString().padStart(2, '0');
+            }
+            
+            setInterval(actualizarContador, 1000);
+            actualizarContador();
+
+            // Cursor personalizado
+            document.addEventListener('mousemove', (e) => {
+                const cursor = document.querySelector('.custom-cursor');
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Botones CTA
+            document.querySelectorAll('.cta-button.primary').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelector('.carta').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Simular reserva
+            document.querySelectorAll('.cta-button:not(.primary)').forEach(button => {
+                button.addEventListener('click', function() {
+                    window.open('https://wa.me/5491112345678?text=¡Hola!%20Quiero%20reservar%20una%20mesa%20en%20Noctuacoffee', '_blank');
+                });
+            });
+
+            // Efecto de sonido ambiente (placeholder)
+            console.log('✨ Sonido ambiente de cafetería cargado');
+        });
+    </script>
+</body>
+</html>

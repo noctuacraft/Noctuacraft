@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noctuacraft 3D - Impresión 3D Personalizada</title>
+    
+    <meta name="description" content="Servicios profesionales de impresión 3D. Modelos personalizados, prototipos y piezas únicas con la Artillery Hornet.">
+    <link rel="icon" href="assets/img/logo2.png">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/styles-3d.css">
+</head>
+<body>
+    <!-- Pantalla de carga optimizada -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo"> 
+            <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+        </div>
+        <div class="loading-text">Calibrando impresora... 🔧</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Efecto de código en el fondo -->
+    <div class="code-effect" id="codeEffect"></div>
+
+    <!-- Overlay para menú móvil -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Modal para impresiones 3D -->
+    <div class="modal" id="printModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-details" id="modalDetails"></div>
+                <p class="modal-desc" id="modalDesc"></p>
+                <div class="modal-actions">
+                    <button class="quote-btn" id="quoteBtn">Solicitar Cotización</button>
+                    <a href="#contacto-3d" class="contact-link">Contactar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elementos flotantes -->
+    <div class="floating-duck" id="floatingDuck" title="¡Imprimiendo en 3D! 🐤🖨️" aria-label="Pato mascota de Noctuacraft">
+        🐤
+    </div>
+    
+    <div class="filament-counter">
+        <span>🖨️</span>
+        <span id="filamentUsed">0</span>g de filamento usado
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+                </div>
+                <span>Noctuacraft</span>
+            </a>
+                
+            <!-- Navegación de escritorio -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#sobre-mi">Sobre Mí</a></li>
+                    <li><a href="index.html#habilidades">Habilidades</a></li>
+                    <li><a href="index.html#proyectos">Proyectos</a></li>
+                    <li><a href="#inicio" class="active nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="index.html#publicidad">Publicidad</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Menú hamburguesa para móviles -->
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Navegación móvil -->
+            <nav class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#sobre-mi">Sobre Mí</a></li>
+                    <li><a href="index.html#habilidades">Habilidades</a></li>
+                    <li><a href="index.html#proyectos">Proyectos</a></li>
+                    <li><a href="#inicio" class="active nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="index.html#publicidad">Publicidad</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+                
+                <div class="nav-divider"></div>
+                
+                <div class="nav-footer">
+                    <p>Noctuacraft 3D</p>
+                    <div class="nav-filament">
+                        <span>🖨️</span>
+                        <span>Impresión 3D</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section 3D -->
+    <section class="hero-3d" id="inicio">
+        <div class="hero-bg">
+            <div class="stars" id="stars"></div>
+            <div class="layer-3d" id="layer3d"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="splash-title">Noctuacraft 3D</h1>
+            <p>Transformando ideas digitales en objetos físicos. Servicios profesionales de impresión 3D con calidad y precisión excepcionales.</p>
+            <div class="hero-buttons">
+                <a href="#galeria" class="cta-button">Ver Galería</a>
+                <a href="#cotizador" class="cta-button secondary">Cotizar Proyecto</a>
+                <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20un%20servicio%20de%20impresión%203D" class="whatsapp-button" target="_blank" rel="noopener">
+                    <span>💬</span> Consultar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Especialidades -->
+    <section class="specialties" id="especialidades">
+        <h2 class="section-title">Nuestras Especialidades</h2>
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-icon">🎨</div>
+                <h3>Modelos Personalizados</h3>
+                <p>Diseños únicos adaptados a tus necesidades específicas</p>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon">🔧</div>
+                <h3>Prototipos</h3>
+                <p>Desarrollo rápido de prototipos funcionales</p>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon">🎁</div>
+                <h3>Regalos Personalizados</h3>
+                <p>Objetos únicos con significado especial</p>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon">⚙️</div>
+                <h3>Piezas Técnicas</h3>
+                <p>Componentes mecánicos y funcionales</p>
+            </div>
+        </div>
+    </section>
+
+<!-- Galería 3D (se generará dinámicamente) -->
+<section class="gallery-section" id="galeria">
+    <h2 class="section-title">Galería de Impresiones</h2>
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="decorativo">Decorativo</button>
+        <button class="filter-btn" data-filter="funcional">Funcional</button>
+        <button class="filter-btn" data-filter="personalizado">Personalizado</button>
+        <button class="filter-btn" data-filter="tecnico">Técnico</button>
+    </div>
+    
+    <div class="gallery-3d" id="dynamicGallery">
+        <!-- La galería se generará aquí automáticamente -->
+    </div>
+</section>
+
+    <!-- Maquinaria -->
+    <section class="machinery-section" id="maquinaria">
+        <h2 class="section-title">Nuestra Tecnología</h2>
+        <div class="machinery-container">
+            <div class="printer-card">
+                <div class="printer-img-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUtLp8pdWH_JAItJdkSc0byI0pnbQR4xsBw&s" alt="Artillery Hornet 3D Printer" class="printer-img">
+                </div>
+                <div class="printer-info">
+                    <h3>Artillery Hornet</h3>
+                    <div class="printer-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Volumen de impresión:</span>
+                            <span class="spec-value">220x220x250mm</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Resolución:</span>
+                            <span class="spec-value">0.05 - 0.3mm</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Velocidad:</span>
+                            <span class="spec-value">hasta 150mm/s</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Extrusor:</span>
+                            <span class="spec-value">Directo Titan</span>
+                        </div>
+                    </div>
+                    <p class="printer-desc">Impresora 3D de alta precisión con sistema de extrusión directa, cama caliente y nivelación automática. Ideal para proyectos que requieren detalles finos y acabados profesionales.</p>
+                    <a href="https://www.creativo3d.com/artillery-hornet-guia" class="printer-link" target="_blank" rel="noopener">
+                        Ver ficha técnica completa →
+                    </a>
+                </div>
+            </div>
+
+<!-- Kobra 3 V2 COMBO -->
+<div class="printer-card">
+    <div class="printer-img-container">
+        <img src="" alt="Anycubic Kobra 3 V2 Combo" class="printer-img">
+    </div>
+    <div class="printer-info">
+        <h3>Anycubic Kobra 3 V2 COMBO</h3>
+
+        <div class="printer-specs">
+            <div class="spec-item">
+                <span class="spec-label">Volumen de impresión:</span>
+                <span class="spec-value">250×250×260mm</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Resolución:</span>
+                <span class="spec-value">0.05 - 0.2mm</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Velocidad:</span>
+                <span class="spec-value">hasta 600mm/s</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Extrusor:</span>
+                <span class="spec-value">Direct Drive de alto flujo</span>
+            </div>
+        </div>
+
+        <p class="printer-desc">
+            Impresora 3D de nueva generación con calibración automática, movimiento reforzado y 
+            combo con estación AMS para cambios de color y materiales en un mismo proyecto. 
+            Ideal para piezas complejas, prototipado rápido y trabajos multicolor.
+        </p>
+
+        <a href="https://3dwork.io/anycubic-kobra-3-combo-v2/" class="printer-link" target="_blank" rel="noopener">
+            Ver ficha técnica completa →
+        </a>
+    </div>
+</div>
+
+        <!-- Materiales -->
+        <div class="materials-section">
+            <h3>Materiales Disponibles</h3>
+            <div class="materials-grid">
+                <div class="material-card">
+                    <div class="material-color" style="background-color: #ffffff"></div>
+                    <h4>PLA</h4>
+                    <p>Perfecto para modelos decorativos y prototipos</p>
+                    <span class="material-price">$140/g</span>
+                </div>
+                <div class="material-card">
+                    <div class="material-color" style="background-color: #ff6b6b"></div>
+                    <h4>PLA+</h4>
+                    <p>Mayor resistencia y mejor acabado superficial</p>
+                    <span class="material-price">$160/g</span>
+                </div>
+                <div class="material-card">
+                    <div class="material-color" style="background-color: #4ecdc4"></div>
+                    <h4>PETG</h4>
+                    <p>Resistente al impacto y condiciones ambientales</p>
+                    <span class="material-price">$180/g</span>
+                </div>
+                <div class="material-card">
+                    <div class="material-color" style="background-color: #ffe66d"></div>
+                    <h4>TPU</h4>
+                    <p>Flexible para piezas que requieren elasticidad</p>
+                    <span class="material-price">$220/g</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cotizador -->
+    <section class="quote-section" id="cotizador">
+        <h2 class="section-title">Cotizador Online</h2>
+        <div class="quote-container">
+            <div class="quote-form">
+                <h3>Solicitar Cotización</h3>
+                <form id="quoteForm">
+                    <div class="form-group">
+                        <label for="projectType">Tipo de Proyecto</label>
+                        <select id="projectType" name="projectType" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="decorativo">Modelo Decorativo</option>
+                            <option value="funcional">Pieza Funcional</option>
+                            <option value="prototipo">Prototipo</option>
+                            <option value="personalizado">Diseño Personalizado</option>
+                            <option value="tecnico">Pieza Técnica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="material">Material Preferido</label>
+                        <select id="material" name="material" required>
+                            <option value="">Seleccionar material</option>
+                            <option value="pla">PLA</option>
+                            <option value="pla-plus">PLA+</option>
+                            <option value="petg">PETG</option>
+                            <option value="tpu">TPU</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Cantidad de Unidades</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="urgency">Urgencia</label>
+                        <select id="urgency" name="urgency" required>
+                            <option value="normal">Normal (5-7 días)</option>
+                            <option value="urgent">Urgente (2-3 días)</option>
+                            <option value="express">Express (24 horas)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Descripción del Proyecto</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Describe tu proyecto, dimensiones aproximadas, uso previsto, etc..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Solicitar Cotización</button>
+                </form>
+            </div>
+            <div class="quote-info">
+                <h3>¿Cómo Calculamos?</h3>
+                <div class="calculation-info">
+                    <div class="calc-item">
+                        <div class="calc-icon">🧵</div>
+                        <div>
+                            <h4>Filamento</h4>
+                            <p>Precio por gramo según material seleccionado</p>
+                        </div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-icon">⏱️</div>
+                        <div>
+                            <h4>Tiempo de Impresión</h4>
+                            <p>Costo por hora de máquina en funcionamiento</p>
+                        </div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-icon">🎨</div>
+                        <div>
+                            <h4>Diseño</h4>
+                            <p>Servicio de modelado 3D si es necesario</p>
+                        </div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-icon">🚀</div>
+                        <div>
+                            <h4>Urgencia</h4>
+                            <p>Recargo por servicios express</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-example">
+                    <h4>Ejemplo de Precio</h4>
+                    <p>Un llavero personalizado en PLA (10g) cuesta aproximadamente <strong>$1400</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso de Trabajo -->
+    <section class="process-section" id="proceso">
+        <h2 class="section-title">Nuestro Proceso</h2>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Consulta</h3>
+                    <p>Compartí tu idea o requerimientos</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Diseño</h3>
+                    <p>Creación o adaptación del modelo 3D</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Aprobación</h3>
+                    <p>Revisión y confirmación del diseño</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Impresión</h3>
+                    <p>Producción con control de calidad</p>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Entrega</h3>
+                    <p>Envío o retiro del producto terminado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Contacto Específico 3D -->
+    <section class="contact-3d" id="contacto-3d">
+        <h2 class="section-title">¿Listo para Crear?</h2>
+        <div class="contact-3d-container">
+            <div class="contact-3d-info">
+                <div class="contact-highlight">
+                    <div class="highlight-icon">🖨️</div>
+                    <div>
+                        <h3>Consultas Técnicas</h3>
+                        <p>Asesoramiento gratuito para tu proyecto 3D</p>
+                    </div>
+                </div>
+                <div class="contact-highlight">
+                    <div class="highlight-icon">💬</div>
+                    <div>
+                        <h3>Respuesta Rápida</h3>
+                        <p>Te respondemos en menos de 2 horas</p>
+                    </div>
+                </div>
+                <div class="contact-highlight">
+                    <div class="highlight-icon">🎯</div>
+                    <div>
+                        <h3>Presupuesto Sin Compromiso</h3>
+                        <p>Cotización detallada y transparente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-3d-action">
+                <h3>Empecemos Tu Proyecto</h3>
+                <p>Contanos sobre tu idea y te ayudamos a hacerla realidad</p>
+                <div class="action-buttons">
+                    <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20un%20servicio%20de%20impresión%203D%20y%20quiero%20consultar%20precios" class="whatsapp-button large" target="_blank" rel="noopener">
+                        <span>💬</span> WhatsApp Directo
+                    </a>
+                    <a href="mailto:tu-email@noctuacraft.com?subject=Consulta%20Impresión%203D" class="email-button">
+                        <span>📧</span> Enviar Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <img src="assets/img/logo2.png" alt="Logo de Noctuacraft" class="logo-image">
+                </div>
+                <span>Noctuacraft 3D</span>
+            </a>
+            <p>Transformando ideas digitales en objetos físicos</p>
+            <div class="footer-links">
+                <a href="index.html">Web Principal</a>
+                <a href="#galeria">Galería</a>
+                <a href="#cotizador">Cotizador</a>
+                <a href="#contacto-3d">Contacto 3D</a>
+            </div>
+            
+            
+        <div class="social-links">
+                <a href="https://instagram.com/tu-usuario" class="social-link" target="_blank" rel="noopener" aria-label="Instagram de Noctuacraft 3D">IG</a>
+                <a href="https://facebook.com/tu-usuario" class="social-link" target="_blank" rel="noopener" aria-label="Facebook de Noctuacraft 3D">FB</a>
+                <a href="https://youtube.com/tu-canal" class="social-link" target="_blank" rel="noopener" aria-label="YouTube de Noctuacraft 3D">YT</a>
+            </div>
+            
+            <p class="copyright">
+                &copy; <span id="year"></span> Noctuacraft 3D. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+     <script src="assets/script-3d.js"></script>
+</body>
+</html>

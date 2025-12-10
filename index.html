@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noctuacraft</title>
+    
+    <meta name="description" content="Desarrollador Frontend especializado en crear experiencias digitales únicas. Trabajo nocturno con pasión y mucho café. Impresión 3D personalizada.">
+    <link rel="icon" href="assets/img/logo2.png">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <!-- Pantalla de carga optimizada -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo"> 
+            <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+        </div>
+        <div class="loading-text">Preparando café... 🐤</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Efecto de código en el fondo (optimizado) -->
+    <div class="code-effect" id="codeEffect"></div>
+
+    <!-- Overlay para menú móvil -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Modal para impresiones 3D -->
+    <div class="modal" id="printModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-details" id="modalDetails"></div>
+                <p class="modal-desc" id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver código -->
+    <div class="modal" id="codeModal">
+        <div class="modal-content">
+            <button class="modal-close" id="codeModalClose">&times;</button>
+            <div class="modal-body">
+                <h3 class="modal-title" id="codeModalTitle">Código del Proyecto</h3>
+                <div class="code-container">
+                    <pre><code id="codeContent" class="language-html"></code></pre>
+                </div>
+                <button class="copy-code-btn" id="copyCodeBtn">Copiar Código</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para imagen ampliada -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content image-modal">
+            <button class="modal-close" id="imageModalClose">&times;</button>
+            <img src="" alt="Imagen ampliada del proyecto" id="modalImage" class="modal-image">
+        </div>
+    </div>
+
+    <!-- Modal para PDF -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content pdf-modal">
+            <button class="modal-close" id="pdfModalClose">&times;</button>
+            <div class="modal-body">
+                <h3 class="modal-title" id="pdfModalTitle">Portfolio de Diseño Gráfico</h3>
+                <div class="pdf-container">
+                    <iframe src="" id="pdfViewer" frameborder="0"></iframe>
+                </div>
+                <a href="#" class="download-pdf-btn" id="downloadPdfBtn" download>
+                    📥 Descargar PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elementos flotantes -->
+    <div class="floating-duck" id="floatingDuck" title="¡Hola! Soy Patroclo (Aparezco en la portadaaa) 🐤☕" aria-label="Pato mascota de Noctuacraft">
+        🐤
+    </div>
+    
+    <div class="coffee-counter">
+        <span>☕</span>
+        <span id="coffeeCount">0</span> tazas de café esta noche
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+                </div>
+                <span>Noctuacraft</span>
+            </div>
+                
+            <!-- Navegación de escritorio -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#sobre-mi">Sobre Mí</a></li>
+                    <li><a href="#habilidades">Habilidades</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="#publicidad">Publicidad</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Menú hamburguesa para móviles -->
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Navegación móvil -->
+            <nav class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#sobre-mi">Sobre Mí</a></li>
+                    <li><a href="#habilidades">Habilidades</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="#publicidad">Publicidad</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <div class="nav-divider"></div>
+                
+                <div class="nav-footer">
+                    <p>Noctuacraft</p>
+                    <div class="nav-coffee">
+                        <span>☕</span>
+                        <span>Desarrollador web</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg">
+            <div class="stars" id="stars"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Noctuacraft</h1>
+            <p>Cuando el mundo duerme, nuestras ideas despiertan. Somos desarrolladores frontend que transforma café ☕ en código bajo la luz de la luna, creando experiencias digitales que realmente importan.</p>
+            <div class="hero-buttons">
+                <a href="#proyectos" class="cta-button">Ver Proyectos</a>
+                <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="whatsapp-button" target="_blank" rel="noopener">
+                    <span>💬</span> Contactar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Mí -->
+    <section id="sobre-mi">
+        <h2 class="section-title">Sobre Mí</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Hola 🐥, somos Noctuacraft. Nos dedicamos al <strong class="high-contrast-text">desarrollo web frontend</strong>, creando sitios y experiencias que no solo funcionen bien, sino que también tengan estilo y sentido.</p>
+                <p>Nuestra pasión es entender qué quiere lograr cada proyecto y encontrar la forma más clara, práctica y bonita de hacerlo realidad. No solo es código: es contar una historia que conecte con las personas.</p>
+                <p><strong class="high-contrast-text">¿Tenés una idea o un proyecto en mente?</strong> Hablemos. No importa si está claro o es solo una chispa: podemos trabajar juntos para transformarlo en algo real.</p>
+            </div>
+            <div class="coffee-mug">
+                <div class="mug">
+                    <div class="coffee">
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="habilidades">
+        <h2 class="section-title">Nuestras Habilidades</h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <h3>Desarrollo Frontend</h3>
+                <p>Creo interfaces de usuario responsivas y atractivas utilizando HTML5, CSS3 y JavaScript. Me especializo en frameworks modernos como React y Vue.js.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Diseño UX/UI</h3>
+                <p>Diseño experiencias de usuario intuitivas y atractivas, priorizando la usabilidad y la accesibilidad en cada proyecto.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Diseño Gráfico</h3>
+                <p>Desarrollo piezas visuales atractivas y profesionales, uniendo tipografía, color y composición para lograr identidad y coherencia. Utilizo herramientas como Illustrator, Photoshop, Figma y Canva para adaptarme a cada proyecto.</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Optimización</h3>
+                <p>Optimizo el rendimiento de aplicaciones web, mejorando los tiempos de carga y la experiencia general del usuario.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="proyectos">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <div class="projects-grid">
+            <!-- Proyecto de Diseño Gráfico con PDF -->
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('assets/img/Zapatilla_catalogo.png')" role="img" aria-label="Proyecto de diseño gráfico - Catálogo de Zapatillas">
+                </div>
+                <div class="project-content">
+                    <h3>Portfolio Diseño Gráfico</h3>
+                    <p>Colección completa de trabajos de diseño gráfico, incluyendo branding, editorial y publicidad.</p>
+                    <div class="project-tags">
+                        <span class="tag">Illustrator</span>
+                        <span class="tag">Photoshop</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Branding</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-pdf" data-pdf="assets/pdf/portfolio-diseno.pdf" data-title="Portfolio de Diseño Gráfico">Ver PDF</a>
+                        <a href="#" class="project-link view-image" data-image="assets/img/Zapatilla_catalogo.png">Ver Imagen</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('https://www.circuitogastronomico.com/wp-content/uploads/2023/04/ledureau-cafecito-1024x706.jpg')" role="img" aria-label="Captura del proyecto Coffee Code Editor - editor de código con temas de café">
+                    <img src="" alt="">
+                </div>
+                <div class="project-content">
+                    <h3>Noctuacoffee</h3>
+                    <p>Sitio web para cafetería con diseño moderno y sistema de reservas online.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="Noctuacoffee.html" class="project-link" target="_blank">Ver Demo</a>
+                        <a href="#" class="project-link view-code" data-project="noctuacoffee">Ver Código</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('https://i0.wp.com/freim.tv/wp-content/uploads/2023/01/images-31-4.jpeg')" role="img" aria-label="Captura del proyecto Stellar Portfolio - generador de portafolios con temas astronómicos">
+                </div>
+                <div class="project-content">
+                    <h3>Noctuavinyl</h3>
+                    <p>Tienda online de vinilos con diseño retro-futurista y sistema de e-commerce.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="NOCTUAVINYL.html" class="project-link" target="_blank">Ver Demo</a>
+                        <a href="#" class="project-link view-code" data-project="noctuavinyl">Ver Código</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Publicidad -->
+    <section id="publicidad">
+        <h2 class="section-title">Publicidad & Flyers</h2>
+        <div class="advertising-grid">
+
+            <div class="ad-item">
+                <div class="ad-video">
+                    <video controls playsinline>
+                        <source src="assets/videos/Noctuacraft.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                    <div class="media-type">🎥 VIDEO</div>
+                </div>
+                <div class="ad-content">
+                    <h3>Noctuacraft</h3>
+                    <p>Conoce Noctuacraft en nuestra publicidad</p>
+                    <span class="ad-date">Octubre 2025</span>
+                </div>
+            </div>
+
+            <!-- IMAGEN -->
+            <div class="ad-item">
+                <div class="ad-image" style="background-image: url('assets/img/FlyerNoctuacraft.png')">
+                    <div class="media-type">📷 IMAGEN</div>
+                </div>
+                <div class="ad-content">
+                    <h3>Noctuacraft - Diseño Gráfico</h3>
+                    <p>Flyer promocional para lanzamiento de temporada</p>
+                    <span class="ad-date">Octubre 2024</span>
+                </div>
+            </div>
+
+            <div class="ad-item">
+                <div class="ad-video">
+                    <video controls playsinline>
+                        <source src="assets/videos/Noctuacraft2.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                    <div class="media-type">🎥 VIDEO</div>
+                </div>
+                <div class="ad-content">
+                    <h3>Noctuacraft - Desarrollo Web</h3>
+                    <p>Noctuacraft: Tus ideas, al Internet</p>
+                    <span class="ad-date">Octubre 2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+        <h2 class="section-title">Trabajemos Juntos</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="whatsapp-contact">
+                    <div class="whatsapp-icon">💬</div>
+                    <div>
+                        <h3>WhatsApp</h3>
+                        <p>Contáctanos directamente por WhatsApp para una respuesta rápida</p>
+                        <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="whatsapp-button" target="_blank" rel="noopener" style="margin-top: 10px; display: inline-block;">
+                            Enviar mensaje
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🌙</div>
+                    <div>
+                        <h3>Horario</h3>
+                        <p>A disposición del cliente</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div>
+                        <h3>Disponibilidad</h3>
+                        <p>Abierto a proyectos freelance y colaboraciones</p>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <div class="logo-img">
+                    <img src="assets/img/logo2.png" alt="Logo de Noctuacraft" class="logo-image">
+                </div>
+                <span>Noctuacraft</span>
+            </div>
+            <p>Donde las ideas cobran vida bajo la luz de la luna</p>
+            <div class="social-links">
+                <a href="https://github.com/tu-usuario" class="social-link" target="_blank" rel="noopener" aria-label="GitHub de Noctuacraft">GH</a>
+                <a href="https://linkedin.com/in/tu-usuario" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn de Noctuacraft">IN</a>
+                <a href="https://twitter.com/tu-usuario" class="social-link" target="_blank" rel="noopener" aria-label="Twitter de Noctuacraft">TW</a>
+                <a href="https://youtube.com/tu-canal" class="social-link" target="_blank" rel="noopener" aria-label="YouTube de Noctuacraft">YT</a>
+            </div>
+            <p class="copyright">
+                &copy; <span id="year"></span> Noctuacraft. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="assets/script.js"></script>
+</body>
+</html>
