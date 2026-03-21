@@ -1,4 +1,9 @@
 /* Variables y reset */
+html {
+  scroll-behavior: smooth;
+}
+
+
 :root {
     --night-blue: #0a0e17;
     --dark-blue: #121826;
