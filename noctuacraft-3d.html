@@ -82,6 +82,14 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Estilo para nota de cargo extra */
+        .urgency-note {
+            font-size: 12px;
+            color: #e67e22;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -110,7 +118,7 @@
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <div class="logo-img">
-                    <img src="assets/img/logo2.svg" alt="Logo de Noctuacraft" class="logo-image"> 
+                    <img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image"> 
                 </div>
                 <span>Noctuacraft</span>
             </a>
@@ -201,37 +209,37 @@
         <div class="materials-section" id="materiales">
             <h3>Materiales Disponibles</h3>
             <div class="materials-table">
-                <table>
+                 <table>
                     <thead>
-                        <tr>
+                         <tr>
                             <th>Material</th>
                             <th>Resistencia</th>
                             <th>Uso Ideal</th>
-                        </tr>
+                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                         <tr>
                             <td>PLA</td>
                             <td>Estándar</td>
                             <td>Modelos decorativos, prototipos</td>
-                        </tr>
-                        <tr>
+                         </tr>
+                         <tr>
                             <td>PLA+</td>
                             <td>Media-Alta</td>
                             <td>Piezas funcionales, mejor acabado</td>
-                        </tr>
-                        <tr>
+                         </tr>
+                         <tr>
                             <td>PETG</td>
                             <td>Alta</td>
                             <td>Exterior, impacto, condiciones ambientales</td>
-                        </tr>
-                        <tr>
+                         </tr>
+                         <tr>
                             <td>TPU</td>
                             <td>Flexible</td>
                             <td>Piezas elásticas, agarres, fundas</td>
-                        </tr>
+                         </tr>
                     </tbody>
-                </table>
+                 </table>
             </div>
             <p class="price-note">* Consulte precios según material y cantidad en el cotizador</p>
         </div>
@@ -254,16 +262,7 @@
                             <option value="tecnico">Pieza Técnica</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="material">Material</label>
-                        <select id="material" required>
-                            <option value="">Seleccionar</option>
-                            <option value="pla">PLA</option>
-                            <option value="pla-plus">PLA+</option>
-                            <option value="petg">PETG</option>
-                            <option value="tpu">TPU</option>
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <label for="quantity">Cantidad</label>
                         <input type="number" id="quantity" min="1" value="1" required>
@@ -273,21 +272,24 @@
                         <select id="urgency" required>
                             <option value="normal">Normal (5-7 días)</option>
                             <option value="urgent">Urgente (2-3 días)</option>
-                            <option value="express">Express (24 horas)</option>
+                            <option value="express">Express (24 horas) - Incluye cargo adicional</option>
                         </select>
+                        <span class="urgency-note" id="urgencyNote"></span>
                     </div>
                     <div class="form-group">
-                        <label for="description">Descripción / Archivo STL</label>
+                        <label for="description">Descripción / Link del modelo STL</label>
                         <textarea id="description" rows="4" placeholder="Describa su proyecto o comparta un enlace a su archivo..." required></textarea>
                     </div>
                     <button type="submit" class="submit-btn">Solicitar Cotización</button>
+                    <p><br>No olvides adjuntar una imagen de referencia en Whatsapp!</p>
                 </form>
             </div>
             <div class="quote-info">
                 <div class="price-example">
-                    <h4>Referencia de precio</h4>
-                    <p>Un llavero personalizado en PLA (10g) desde <strong>$1400</strong></p>
-                    <p class="example-note">* El precio final depende del material, tiempo y complejidad</p>
+                    <h4>Información importante</h4>
+                    <p>Presupuesto personalizado según su proyecto</p>
+                    <p>Precios mayoristas y minoristas</p>
+                    <p class="example-note">* El envío Express tiene un cargo adicional por prioridad de producción</p>
                 </div>
             </div>
         </div>
@@ -319,7 +321,7 @@
     <footer>
         <div class="footer-content">
             <div class="logo">
-                <div class="logo-img"><img src="assets/img/logo2.svg" alt="Logo de Noctuacraft" class="logo-image"></div>
+                <div class="logo-img"><img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image"></div>
                 <span>Noctuacraft</span>
             </div>
             <p>Donde las ideas cobran vida bajo la luz de la luna</p>
@@ -331,16 +333,10 @@
             <p class="copyright">&copy; 2025 - <span id="year"></span> Noctuacraft. Todos los derechos reservados.</p>
         </div>
     </footer>
-
 <script type="module">
-// ============================================
-// CONEXIÓN CON FIREBASE - GALERÍA EN TIEMPO REAL
-// ============================================
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyCETIGd2eehtCA7I4MAcNyr-cFmIoBDLfU",
     databaseURL: "https://noctua-stock-default-rtdb.firebaseio.com",
@@ -348,31 +344,25 @@ const firebaseConfig = {
     appId: "1:812703979866:web:1bbce7166ed1b738af3b63"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const productosRef = ref(db, 'productos');
 
-// Variables globales
 let productosFirebase = [];
 let currentDisplayCount = 0;
 let itemsPerPage = 0;
+let currentModalProduct = null;
 
-// Detectar cantidad de items según el ancho de pantalla
 function getItemsPerPage() {
     const width = window.innerWidth;
     if (width <= 768) {
-        return 3; // Móvil: 3 productos iniciales
+        return 3;
     } else if (width <= 1024) {
-        return 4; // Tablet: 4 productos iniciales
+        return 4;
     } else {
-        return 6; // Escritorio: 6 productos iniciales (2 filas de 3)
+        return 6;
     }
 }
-
-// ============================================
-// FUNCIONES DE LA GALERÍA
-// ============================================
 
 function getCategoryName(cat) {
     const map = { decorativo: "Decorativo", funcional: "Funcional", personalizado: "Personalizado", tecnico: "Técnico" };
@@ -384,7 +374,13 @@ function getBadgeForCategory(cat) {
     return map[cat] || cat;
 }
 
-// Crear tarjeta individual
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function createPrintCard(id, product) {
     const card = document.createElement('div');
     card.className = 'print-card';
@@ -417,15 +413,6 @@ function createPrintCard(id, product) {
     return card;
 }
 
-// Escapar HTML
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// Mostrar productos con paginación
 function displayProducts() {
     const galleryContainer = document.getElementById('dynamicGallery');
     if (!galleryContainer) return;
@@ -444,13 +431,11 @@ function displayProducts() {
         return;
     }
     
-    // Limpiar contenedor pero mantener los productos ya mostrados
     const existingCards = galleryContainer.querySelectorAll('.print-card');
     if (currentDisplayCount === 0) {
         galleryContainer.innerHTML = '';
     }
     
-    // Mostrar solo los nuevos productos
     const startIndex = existingCards.length;
     const endIndex = Math.min(currentDisplayCount, totalProducts);
     
@@ -459,13 +444,11 @@ function displayProducts() {
         const card = createPrintCard(product.id, product);
         galleryContainer.appendChild(card);
         
-        // Animación escalonada
         setTimeout(() => {
             card.classList.add('visible');
         }, (i - startIndex) * 50);
     }
     
-    // Mostrar u ocultar botón "Ver más"
     if (currentDisplayCount < totalProducts) {
         loadMoreContainer.style.display = 'block';
         const loadMoreBtn = document.getElementById('loadMoreBtn');
@@ -476,14 +459,12 @@ function displayProducts() {
         loadMoreContainer.style.display = 'none';
     }
     
-    // Reconfigurar eventos después de agregar nuevas tarjetas
     setTimeout(() => {
         setupGalleryFilters();
         setupPrintModal();
     }, 100);
 }
 
-// Cargar más productos
 function loadMoreProducts() {
     const totalProducts = productosFirebase.length;
     const increment = getItemsPerPage();
@@ -492,12 +473,10 @@ function loadMoreProducts() {
     displayProducts();
 }
 
-// Generar galería completa (reiniciar paginación)
 function generateGalleryFromFirebase() {
     const galleryContainer = document.getElementById('dynamicGallery');
     if (!galleryContainer) return;
     
-    // Resetear estado
     currentDisplayCount = getItemsPerPage();
     galleryContainer.innerHTML = '';
     
@@ -515,7 +494,6 @@ function generateGalleryFromFirebase() {
     displayProducts();
 }
 
-// Configurar filtros
 function setupGalleryFilters() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     
@@ -531,35 +509,76 @@ function setupGalleryFilters() {
         this.classList.add('active');
         const filter = this.getAttribute('data-filter');
         
-        // Al filtrar, mostrar todos los productos que cumplan el filtro
         const allCards = document.querySelectorAll('.print-card');
-        let visibleCount = 0;
         
         allCards.forEach(card => {
             const category = card.getAttribute('data-category');
             if (filter === 'all' || category === filter) {
                 card.style.display = 'block';
-                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
         
-        // Ocultar botón "Ver más" si hay filtro activo
         const loadMoreContainer = document.getElementById('loadMoreContainer');
         if (filter !== 'all') {
             loadMoreContainer.style.display = 'none';
         } else {
-            // Si es "todos", mostrar botón si hay más productos por mostrar
-            const totalShown = currentDisplayCount;
-            if (totalShown < productosFirebase.length) {
+            if (currentDisplayCount < productosFirebase.length) {
                 loadMoreContainer.style.display = 'block';
             }
         }
     }
 }
 
-// Configurar modal
+function openModal(product) {
+    currentModalProduct = product;
+    const modal = document.getElementById('printModal');
+    
+    const modalImg = document.getElementById('modalImg');
+    modalImg.src = product.img || '';
+    modalImg.alt = product.nombre || 'Producto';
+    
+    document.getElementById('modalTitle').textContent = product.nombre || 'Producto 3D';
+    document.getElementById('modalDesc').textContent = product.descripcion || 'Sin descripción disponible.';
+    
+    const modalDetails = document.getElementById('modalDetails');
+    modalDetails.innerHTML = '';
+    
+    const details = [
+        { label: 'Tiempo de impresión', value: product.tiempo || '2-4 horas' },
+        { label: 'Material usado', value: product.material || 'PLA' },
+        { label: 'Peso aproximado', value: product.peso ? `${product.peso}g` : 'Consultar' },
+        { label: 'Categoría', value: getCategoryName(product.categoria) },
+        { label: 'Precio', value: `$${product.precio || 'Consultar'}` }
+    ];
+    
+    if (product.especificaciones && typeof product.especificaciones === 'object') {
+        Object.entries(product.especificaciones).forEach(([key, value]) => {
+            details.push({ label: key, value: value });
+        });
+    }
+    
+    details.forEach(detail => {
+        const div = document.createElement('div');
+        div.className = 'detail-item';
+        div.innerHTML = `
+            <div class="detail-label">${detail.label}</div>
+            <div class="detail-value">${detail.value}</div>
+        `;
+        modalDetails.appendChild(div);
+    });
+    
+    const quoteBtn = document.getElementById('quoteBtn');
+    quoteBtn.onclick = () => {
+        const message = `Hola, me interesa una cotización para el modelo: "${product.nombre}". Precio: $${product.precio || 'a definir'}. ¿Podría darme más información?`;
+        window.open(`https://wa.me/5491160244156?text=${encodeURIComponent(message)}`, '_blank');
+    };
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 function setupPrintModal() {
     const modal = document.getElementById('printModal');
     const modalClose = document.getElementById('modalClose');
@@ -569,86 +588,63 @@ function setupPrintModal() {
     const gallery = document.querySelector('.gallery-3d');
     if (!gallery) return;
     
-    gallery.addEventListener('click', (e) => {
-        const card = e.target.closest('.print-card');
-        if (!card) return;
-        
-        const printId = card.getAttribute('data-print');
-        const data = productosFirebase.find(p => p.id === printId);
-        
-        if (!data) return;
-        
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = data.img || '';
-        modalImg.alt = data.nombre || 'Producto';
-        
-        document.getElementById('modalTitle').textContent = data.nombre || 'Producto 3D';
-        document.getElementById('modalDesc').textContent = data.descripcion || 'Sin descripción disponible.';
-        
-        const modalDetails = document.getElementById('modalDetails');
-        modalDetails.innerHTML = '';
-        
-        const details = [
-            { label: 'Tiempo de impresión', value: data.tiempo || '2-4 horas' },
-            { label: 'Material usado', value: data.material || 'PLA' },
-            { label: 'Peso aproximado', value: data.peso ? `${data.peso}g` : 'Consultar' },
-            { label: 'Categoría', value: getCategoryName(data.categoria) },
-            { label: 'Precio', value: `$${data.precio || 'Consultar'}` }
-        ];
-        
-        if (data.especificaciones && typeof data.especificaciones === 'object') {
-            Object.entries(data.especificaciones).forEach(([key, value]) => {
-                details.push({ label: key, value: value });
-            });
-        }
-        
-        details.forEach(detail => {
-            const div = document.createElement('div');
-            div.className = 'detail-item';
-            div.innerHTML = `
-                <div class="detail-label">${detail.label}</div>
-                <div class="detail-value">${detail.value}</div>
-            `;
-            modalDetails.appendChild(div);
-        });
-        
-        document.getElementById('quoteBtn').onclick = () => {
-            const message = `Hola, me interesa una cotización para el modelo: "${data.nombre}". Precio: $${data.precio || 'a definir'}. ¿Podría darme más información?`;
-            window.open(`https://wa.me/5491160244156?text=${encodeURIComponent(message)}`, '_blank');
-        };
-        
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
+    gallery.removeEventListener('click', handleGalleryClick);
+    gallery.addEventListener('click', handleGalleryClick);
     
     modalClose.onclick = () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        currentModalProduct = null;
     };
     
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.classList.remove('active');
             document.body.style.overflow = '';
+            currentModalProduct = null;
         }
     });
 }
 
-// Sistema de cotización
+function handleGalleryClick(e) {
+    const card = e.target.closest('.print-card');
+    if (!card) return;
+    
+    const printId = card.getAttribute('data-print');
+    const product = productosFirebase.find(p => p.id === printId);
+    
+    if (product) {
+        openModal(product);
+    }
+}
+
 function setupQuoteSystem() {
     const form = document.getElementById('quoteForm');
+    const urgencySelect = document.getElementById('urgency');
+    const urgencyNote = document.getElementById('urgencyNote');
+    
     if (!form) return;
+    
+    if (urgencySelect && urgencyNote) {
+        urgencySelect.addEventListener('change', () => {
+            if (urgencySelect.value === 'express') {
+                urgencyNote.textContent = '⚠️ El envío Express tiene un cargo adicional por prioridad de producción. Se le informará el monto al cotizar.';
+                urgencyNote.style.color = '#e67e22';
+            } else {
+                urgencyNote.textContent = '';
+            }
+        });
+    }
     
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
         const projectType = document.getElementById('projectType')?.value || '';
-        const material = document.getElementById('material')?.value || '';
         const quantity = document.getElementById('quantity')?.value || 1;
         const urgency = document.getElementById('urgency')?.value || 'normal';
         const description = document.getElementById('description')?.value || '';
         
-        if (!projectType || !material || !description) {
+        if (!projectType || !description) {
             alert('Por favor, complete todos los campos.');
             return;
         }
@@ -656,18 +652,28 @@ function setupQuoteSystem() {
         const urgencyText = {
             'normal': 'Normal (5-7 días)',
             'urgent': 'Urgente (2-3 días)',
-            'express': 'Express (24 horas)'
+            'express': 'Express (24 horas) - Soy consciente de que esta opción posee cargos adicionales'
         }[urgency] || 'Normal (5-7 días)';
         
-        const message = `Hola, solicito cotización para impresión 3D:%0ATipo de Proyecto: ${projectType}%0AMaterial: ${material}%0ACantidad: ${quantity} unidades%0AUrgencia: ${urgencyText}%0ADescripción: ${description}`;
+        const messageText = `Solicitud de Cotización - Noctua 3D
+
+*Tipo de Proyecto:* ${projectType}
+*Cantidad:* ${quantity} unidades
+*Urgencia:* ${urgencyText}
+*Descripción del proyecto:*
+${description}
+Quedo atento a su respuesta`;
         
-        window.open(`https://wa.me/5491160244156?text=${message}`, '_blank');
+        const encodedMessage = encodeURIComponent(messageText);
+        const whatsappUrl = `https://wa.me/5491160244156?text=${encodedMessage}`;
+        
+        window.open(whatsappUrl, '_blank');
         form.reset();
-        alert('Cotización enviada. Te contactaremos por WhatsApp.');
+        if (urgencyNote) urgencyNote.textContent = '';
+        alert('Cotización enviada. Te contactaremos por WhatsApp en breve.');
     });
 }
 
-// Menú móvil
 function setupMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
@@ -701,7 +707,6 @@ function setupMobileMenu() {
     }
 }
 
-// Scroll suave
 function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -717,9 +722,6 @@ function setupSmoothScroll() {
     });
 }
 
-// ============================================
-// ESCUCHA EN TIEMPO REAL DE FIREBASE
-// ============================================
 onValue(productosRef, (snapshot) => {
     const data = snapshot.val();
     productosFirebase = [];
@@ -728,32 +730,25 @@ onValue(productosRef, (snapshot) => {
         Object.entries(data).forEach(([id, value]) => {
             productosFirebase.push({ id, ...value });
         });
-        // Ordenar por fecha de agregado (más nuevos primero)
         productosFirebase.sort((a, b) => (b.fechaAgregado || '').localeCompare(a.fechaAgregado || ''));
     }
     
-    // Resetear paginación con nuevo tamaño de pantalla
     itemsPerPage = getItemsPerPage();
     currentDisplayCount = itemsPerPage;
     generateGalleryFromFirebase();
 });
 
-// ============================================
-// INICIALIZACIÓN
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('year').textContent = new Date().getFullYear();
     setupMobileMenu();
     setupSmoothScroll();
     setupQuoteSystem();
     
-    // Configurar botón "Ver más"
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', loadMoreProducts);
     }
     
-    // Recalcular al cambiar tamaño de pantalla
     window.addEventListener('resize', () => {
         const newItemsPerPage = getItemsPerPage();
         if (newItemsPerPage !== itemsPerPage) {
@@ -764,7 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Acceso secreto a admin
 let buffer = "";
 window.addEventListener('keydown', (e) => {
     const key = e.key.toLowerCase();

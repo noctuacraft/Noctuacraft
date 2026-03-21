@@ -33,6 +33,65 @@
         .action-buttons { display: flex; gap: 5px; }
         .stock-badge { background: #27ae60; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; }
         .loading { opacity: 0.6; pointer-events: none; }
+        
+        /* Estilos para modal de contraseña */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .password-modal.active {
+            display: flex;
+        }
+        .password-modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .password-modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .password-modal-content input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .password-modal-content button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        .btn-confirm-pwd {
+            background: var(--success);
+            color: white;
+        }
+        .btn-cancel-pwd {
+            background: #95a5a6;
+            color: white;
+        }
+        .error-message {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -83,19 +142,19 @@
     <!-- Tabla de productos existentes -->
     <div class="card" style="padding:0; overflow-x: auto;">
         <h3 style="padding: 15px 15px 0 15px;">Productos en Stock</h3>
-        <table>
+         <table>
             <thead>
-                <tr>
+                 <tr>
                     <th>Foto</th>
                     <th>Producto</th>
                     <th>Detalles</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Acciones</th>
-                </tr>
+                 </tr>
             </thead>
             <tbody id="lista-stock"></tbody>
-        </table>
+         </table>
     </div>
 </div>
 
@@ -133,9 +192,29 @@
     </div>
 </div>
 
+<!-- Modal para verificar contraseña antes de publicar -->
+<div id="passwordModal" class="password-modal">
+    <div class="password-modal-content">
+        <h3>🔐 Verificación de seguridad</h3>
+        <p>Ingrese la contraseña para publicar el producto</p>
+        <input type="password" id="passwordInput" placeholder="Contraseña" autocomplete="off">
+        <div class="error-message" id="passwordError">Contraseña incorrecta</div>
+        <div>
+            <button id="confirmPasswordBtn" class="btn-confirm-pwd">Confirmar</button>
+            <button id="cancelPasswordBtn" class="btn-cancel-pwd">Cancelar</button>
+        </div>
+    </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// ============================================
+// CONFIGURACIÓN DE SEGURIDAD
+// ============================================
+// ⚠️ CAMBIÁ ESTA CONTRASEÑA POR LA QUE DESEES USAR ⚠️
+const ADMIN_PASSWORD = "Noctua2025";  // <--- MODIFICÁ AQUÍ TU CONTRASEÑA
 
 // Firebase config
 const firebaseConfig = {
@@ -155,11 +234,11 @@ const db = getDatabase(app);
 const stockRef = ref(db, 'productos');
 
 let currentEditId = null;
+let pendingProductData = null; // Guardar datos del producto mientras se pide contraseña
 
 // ========================= FUNCIÓN PARA CONVERTIR A WEBP ANTES DE SUBIR =========================
 async function convertToWebP(file) {
     return new Promise((resolve, reject) => {
-        // Si ya es WebP, no reconvertir
         if (file.type === 'image/webp') {
             resolve(file);
             return;
@@ -169,14 +248,12 @@ async function convertToWebP(file) {
         reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
-                // Crear canvas para convertir a WebP
                 const canvas = document.createElement('canvas');
                 canvas.width = img.width;
                 canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0);
                 
-                // Convertir a WebP con calidad 0.85 (balance entre calidad y tamaño)
                 canvas.toBlob((blob) => {
                     if (blob) {
                         const webpFile = new File([blob], file.name.replace(/\.[^/.]+$/, '.webp'), {
@@ -209,7 +286,6 @@ document.getElementById('input-foto').onchange = async (e) => {
     uploadArea.classList.add('loading');
     
     try {
-        // Convertir a WebP
         const webpFile = await convertToWebP(file);
         
         statusTxt.innerText = "Subiendo imagen...";
@@ -242,8 +318,64 @@ document.getElementById('input-foto').onchange = async (e) => {
     }
 };
 
-// ========================= GUARDAR PRODUCTO =========================
-document.getElementById('btn-save').onclick = () => {
+// ========================= MOSTRAR MODAL DE CONTRASEÑA =========================
+function showPasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorDiv = document.getElementById('passwordError');
+    
+    passwordInput.value = '';
+    errorDiv.style.display = 'none';
+    modal.classList.add('active');
+    passwordInput.focus();
+}
+
+function hidePasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    modal.classList.remove('active');
+    pendingProductData = null;
+}
+
+function verifyPasswordAndSave() {
+    const passwordInput = document.getElementById('passwordInput');
+    const enteredPassword = passwordInput.value;
+    const errorDiv = document.getElementById('passwordError');
+    
+    if (enteredPassword === ADMIN_PASSWORD) {
+        // Contraseña correcta, proceder a guardar
+        errorDiv.style.display = 'none';
+        hidePasswordModal();
+        
+        if (pendingProductData) {
+            // Guardar el producto pendiente
+            push(stockRef, pendingProductData);
+            
+            // Resetear formulario
+            document.getElementById('nombre').value = "";
+            document.getElementById('precio').value = "";
+            document.getElementById('peso').value = "";
+            document.getElementById('tiempo').value = "";
+            document.getElementById('material').value = "";
+            document.getElementById('stock').value = "1";
+            document.getElementById('descripcion').value = "";
+            document.getElementById('preview-box').style.display = 'none';
+            document.getElementById('btn-save').disabled = true;
+            document.getElementById('status-txt').innerText = "Seleccionar imagen del producto";
+            document.getElementById('img-url-final').value = "";
+            
+            alert("Producto agregado correctamente");
+            pendingProductData = null;
+        }
+    } else {
+        // Contraseña incorrecta
+        errorDiv.style.display = 'block';
+        passwordInput.value = '';
+        passwordInput.focus();
+    }
+}
+
+// ========================= GUARDAR PRODUCTO (con verificación) =========================
+function prepareProductData() {
     const nombre = document.getElementById('nombre').value;
     const precio = document.getElementById('precio').value;
     const categoria = document.getElementById('categoria').value;
@@ -256,10 +388,10 @@ document.getElementById('btn-save').onclick = () => {
 
     if (!nombre || !precio || !img) {
         alert("Complete nombre, precio y seleccione una imagen");
-        return;
+        return null;
     }
 
-    push(stockRef, {
+    return {
         nombre: nombre.trim(),
         precio: parseFloat(precio),
         categoria,
@@ -270,22 +402,15 @@ document.getElementById('btn-save').onclick = () => {
         stock: parseInt(stock) || 1,
         descripcion: descripcion.trim() || `Producto 3D de categoría ${categoria}`,
         fechaAgregado: new Date().toISOString()
-    });
+    };
+}
 
-    // Resetear formulario
-    document.getElementById('nombre').value = "";
-    document.getElementById('precio').value = "";
-    document.getElementById('peso').value = "";
-    document.getElementById('tiempo').value = "";
-    document.getElementById('material').value = "";
-    document.getElementById('stock').value = "1";
-    document.getElementById('descripcion').value = "";
-    document.getElementById('preview-box').style.display = 'none';
-    document.getElementById('btn-save').disabled = true;
-    document.getElementById('status-txt').innerText = "Seleccionar imagen del producto";
-    document.getElementById('img-url-final').value = "";
-    
-    alert("Producto agregado correctamente");
+document.getElementById('btn-save').onclick = () => {
+    const productData = prepareProductData();
+    if (productData) {
+        pendingProductData = productData;
+        showPasswordModal();
+    }
 };
 
 // ========================= EDITAR PRODUCTO (Modal) =========================
@@ -344,12 +469,31 @@ document.getElementById('btn-cancel-edit').onclick = () => {
     currentEditId = null;
 };
 
+// Configurar eventos del modal de contraseña
+document.getElementById('confirmPasswordBtn').onclick = verifyPasswordAndSave;
+document.getElementById('cancelPasswordBtn').onclick = () => {
+    hidePasswordModal();
+    pendingProductData = null;
+};
+
+// Permitir enviar con Enter en el campo de contraseña
+document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        verifyPasswordAndSave();
+    }
+});
+
 // Cerrar modal al hacer clic fuera
 window.onclick = (e) => {
     const modal = document.getElementById('editModal');
     if (e.target === modal) {
         modal.style.display = 'none';
         currentEditId = null;
+    }
+    const pwdModal = document.getElementById('passwordModal');
+    if (e.target === pwdModal) {
+        hidePasswordModal();
+        pendingProductData = null;
     }
 };
 
@@ -383,7 +527,6 @@ onValue(stockRef, (snapshot) => {
         productos.push({ id: child.key, ...child.val() });
     });
     
-    // Ordenar por fecha de agregado (más nuevos primero)
     productos.sort((a, b) => (b.fechaAgregado || '').localeCompare(a.fechaAgregado || ''));
 
     if (productos.length === 0) {
@@ -423,7 +566,6 @@ onValue(stockRef, (snapshot) => {
         tbody.appendChild(row);
     });
     
-    // Asignar eventos a los botones después de renderizar
     document.querySelectorAll('.btn-edit').forEach(btn => {
         btn.onclick = () => {
             const id = btn.getAttribute('data-id');
@@ -442,7 +584,6 @@ onValue(stockRef, (snapshot) => {
     });
 });
 
-// Función para escapar HTML y prevenir XSS
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
