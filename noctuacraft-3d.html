@@ -424,7 +424,6 @@ function displayProducts() {
         galleryContainer.innerHTML = `
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(233, 226, 214, 0.5);">
                 <h3>No hay productos disponibles</h3>
-                <p>Agregue productos desde el panel de administración</p>
             </div>
         `;
         loadMoreContainer.style.display = 'none';
@@ -484,7 +483,6 @@ function generateGalleryFromFirebase() {
         galleryContainer.innerHTML = `
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(233, 226, 214, 0.5);">
                 <h3>No hay productos disponibles</h3>
-                <p>Agregue productos desde el panel de administración</p>
             </div>
         `;
         document.getElementById('loadMoreContainer').style.display = 'none';

@@ -33,65 +33,6 @@
         .action-buttons { display: flex; gap: 5px; }
         .stock-badge { background: #27ae60; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; }
         .loading { opacity: 0.6; pointer-events: none; }
-        
-        /* Estilos para modal de contraseña */
-        .password-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .password-modal.active {
-            display: flex;
-        }
-        .password-modal-content {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-        .password-modal-content h3 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .password-modal-content input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-        .password-modal-content button {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin: 0 5px;
-        }
-        .btn-confirm-pwd {
-            background: var(--success);
-            color: white;
-        }
-        .btn-cancel-pwd {
-            background: #95a5a6;
-            color: white;
-        }
-        .error-message {
-            color: var(--danger);
-            font-size: 12px;
-            margin-top: 10px;
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -99,7 +40,6 @@
 <div class="container">
     <h1>Panel de Stock Noctuacraft</h1>
     
-    <!-- Formulario para agregar producto -->
     <div class="card">
         <h3>Agregar Nuevo Producto</h3>
         <label class="upload-area" for="input-foto">
@@ -109,12 +49,12 @@
         
         <div id="preview-box" style="display:none; margin-top:15px; align-items:center; gap:15px; background: #f0f0f0; padding: 10px; border-radius: 10px;">
             <img id="img-preview" src="" style="width:70px; height:70px; object-fit:cover; border-radius:5px;">
-            <strong style="color:var(--success);">Imagen convertida a WebP</strong>
+            <strong style="color:var(--success);">Imagen lista para publicar</strong>
         </div>
 
         <div class="grid">
-            <input type="text" id="nombre" placeholder="Nombre del producto *">
-            <input type="number" id="precio" placeholder="Precio ($) *">
+            <input type="text" id="nombre" placeholder="Nombre del producto">
+            <input type="number" id="precio" placeholder="Precio">
         </div>
         
         <div class="grid">
@@ -122,43 +62,41 @@
                 <option value="decorativo">Decorativo</option>
                 <option value="funcional">Funcional</option>
                 <option value="personalizado">Personalizado</option>
-                <option value="tecnico">Técnico</option>
+                <option value="tecnico">Tecnico</option>
             </select>
             <input type="number" id="peso" placeholder="Peso (gramos)" step="0.1">
         </div>
         
         <div class="grid-3">
-            <input type="text" id="tiempo" placeholder="Tiempo impresión (ej: 2h 30min)">
-            <input type="text" id="material" placeholder="Material (ej: PLA, PETG)">
+            <input type="text" id="tiempo" placeholder="Tiempo impresion">
+            <input type="text" id="material" placeholder="Material">
             <input type="number" id="stock" placeholder="Stock disponible" value="1">
         </div>
         
-        <textarea id="descripcion" placeholder="Descripción detallada del producto..."></textarea>
+        <textarea id="descripcion" placeholder="Descripcion detallada del producto"></textarea>
         
         <input type="hidden" id="img-url-final">
-        <button id="btn-save" class="btn btn-add" disabled>Publicar en el catálogo</button>
+        <button id="btn-save" class="btn btn-add" disabled>Publicar en el catalogo</button>
     </div>
 
-    <!-- Tabla de productos existentes -->
     <div class="card" style="padding:0; overflow-x: auto;">
         <h3 style="padding: 15px 15px 0 15px;">Productos en Stock</h3>
-         <table>
+        <table>
             <thead>
-                 <tr>
+                <tr>
                     <th>Foto</th>
                     <th>Producto</th>
                     <th>Detalles</th>
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Acciones</th>
-                 </tr>
+                </tr>
             </thead>
             <tbody id="lista-stock"></tbody>
-         </table>
+        </table>
     </div>
 </div>
 
-<!-- Modal para editar (flotante) -->
 <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
     <div style="background:white; border-radius:15px; padding:25px; max-width:500px; width:90%; max-height:80vh; overflow-y:auto;">
         <h3 id="editModalTitle">Editar Producto</h3>
@@ -172,36 +110,22 @@
                 <option value="decorativo">Decorativo</option>
                 <option value="funcional">Funcional</option>
                 <option value="personalizado">Personalizado</option>
-                <option value="tecnico">Técnico</option>
+                <option value="tecnico">Tecnico</option>
             </select>
             <input type="number" id="edit-peso" placeholder="Peso (gramos)" step="0.1">
         </div>
         <div class="grid">
-            <input type="text" id="edit-tiempo" placeholder="Tiempo impresión">
+            <input type="text" id="edit-tiempo" placeholder="Tiempo impresion">
             <input type="text" id="edit-material" placeholder="Material">
         </div>
         <div class="grid">
             <input type="number" id="edit-stock" placeholder="Stock">
             <input type="text" id="edit-img" placeholder="URL de imagen">
         </div>
-        <textarea id="edit-descripcion" rows="3" placeholder="Descripción"></textarea>
+        <textarea id="edit-descripcion" rows="3" placeholder="Descripcion"></textarea>
         <div style="margin-top:15px; display:flex; gap:10px;">
             <button id="btn-confirm-edit" class="btn-save-edit">Guardar Cambios</button>
             <button id="btn-cancel-edit" class="btn-cancel-edit">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para verificar contraseña antes de publicar -->
-<div id="passwordModal" class="password-modal">
-    <div class="password-modal-content">
-        <h3>🔐 Verificación de seguridad</h3>
-        <p>Ingrese la contraseña para publicar el producto</p>
-        <input type="password" id="passwordInput" placeholder="Contraseña" autocomplete="off">
-        <div class="error-message" id="passwordError">Contraseña incorrecta</div>
-        <div>
-            <button id="confirmPasswordBtn" class="btn-confirm-pwd">Confirmar</button>
-            <button id="cancelPasswordBtn" class="btn-cancel-pwd">Cancelar</button>
         </div>
     </div>
 </div>
@@ -210,13 +134,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// ============================================
-// CONFIGURACIÓN DE SEGURIDAD
-// ============================================
-// ⚠️ CAMBIÁ ESTA CONTRASEÑA POR LA QUE DESEES USAR ⚠️
-const ADMIN_PASSWORD = "Noctua2025";  // <--- MODIFICÁ AQUÍ TU CONTRASEÑA
-
-// Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyCETIGd2eehtCA7I4MAcNyr-cFmIoBDLfU",
     databaseURL: "https://noctua-stock-default-rtdb.firebaseio.com",
@@ -224,19 +141,15 @@ const firebaseConfig = {
     appId: "1:812703979866:web:1bbce7166ed1b738af3b63"
 };
 
-// Cloudinary config
 const CLOUD_NAME = "dmnz0evps";
 const UPLOAD_PRESET = "noctua_preset";
 
-// Init Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const stockRef = ref(db, 'productos');
 
 let currentEditId = null;
-let pendingProductData = null; // Guardar datos del producto mientras se pide contraseña
 
-// ========================= FUNCIÓN PARA CONVERTIR A WEBP ANTES DE SUBIR =========================
 async function convertToWebP(file) {
     return new Promise((resolve, reject) => {
         if (file.type === 'image/webp') {
@@ -274,7 +187,6 @@ async function convertToWebP(file) {
     });
 }
 
-// ========================= SUBIR IMAGEN CON CONVERSIÓN A WEBP =========================
 document.getElementById('input-foto').onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -282,7 +194,7 @@ document.getElementById('input-foto').onchange = async (e) => {
     const statusTxt = document.getElementById('status-txt');
     const uploadArea = document.querySelector('.upload-area');
     
-    statusTxt.innerText = "Convertiendo a WebP...";
+    statusTxt.innerText = "Procesando imagen...";
     uploadArea.classList.add('loading');
     
     try {
@@ -305,7 +217,7 @@ document.getElementById('input-foto').onchange = async (e) => {
             document.getElementById('img-preview').src = data.secure_url;
             document.getElementById('preview-box').style.display = 'flex';
             document.getElementById('btn-save').disabled = false;
-            statusTxt.innerText = "Imagen subida y convertida a WebP";
+            statusTxt.innerText = "Imagen lista para publicar";
         } else {
             throw new Error('Error en la respuesta de Cloudinary');
         }
@@ -318,63 +230,6 @@ document.getElementById('input-foto').onchange = async (e) => {
     }
 };
 
-// ========================= MOSTRAR MODAL DE CONTRASEÑA =========================
-function showPasswordModal() {
-    const modal = document.getElementById('passwordModal');
-    const passwordInput = document.getElementById('passwordInput');
-    const errorDiv = document.getElementById('passwordError');
-    
-    passwordInput.value = '';
-    errorDiv.style.display = 'none';
-    modal.classList.add('active');
-    passwordInput.focus();
-}
-
-function hidePasswordModal() {
-    const modal = document.getElementById('passwordModal');
-    modal.classList.remove('active');
-    pendingProductData = null;
-}
-
-function verifyPasswordAndSave() {
-    const passwordInput = document.getElementById('passwordInput');
-    const enteredPassword = passwordInput.value;
-    const errorDiv = document.getElementById('passwordError');
-    
-    if (enteredPassword === ADMIN_PASSWORD) {
-        // Contraseña correcta, proceder a guardar
-        errorDiv.style.display = 'none';
-        hidePasswordModal();
-        
-        if (pendingProductData) {
-            // Guardar el producto pendiente
-            push(stockRef, pendingProductData);
-            
-            // Resetear formulario
-            document.getElementById('nombre').value = "";
-            document.getElementById('precio').value = "";
-            document.getElementById('peso').value = "";
-            document.getElementById('tiempo').value = "";
-            document.getElementById('material').value = "";
-            document.getElementById('stock').value = "1";
-            document.getElementById('descripcion').value = "";
-            document.getElementById('preview-box').style.display = 'none';
-            document.getElementById('btn-save').disabled = true;
-            document.getElementById('status-txt').innerText = "Seleccionar imagen del producto";
-            document.getElementById('img-url-final').value = "";
-            
-            alert("Producto agregado correctamente");
-            pendingProductData = null;
-        }
-    } else {
-        // Contraseña incorrecta
-        errorDiv.style.display = 'block';
-        passwordInput.value = '';
-        passwordInput.focus();
-    }
-}
-
-// ========================= GUARDAR PRODUCTO (con verificación) =========================
 function prepareProductData() {
     const nombre = document.getElementById('nombre').value;
     const precio = document.getElementById('precio').value;
@@ -400,7 +255,7 @@ function prepareProductData() {
         tiempo: tiempo.trim() || "2-4 horas",
         material: material.trim() || "PLA",
         stock: parseInt(stock) || 1,
-        descripcion: descripcion.trim() || `Producto 3D de categoría ${categoria}`,
+        descripcion: descripcion.trim() || `Producto 3D de categoria ${categoria}`,
         fechaAgregado: new Date().toISOString()
     };
 }
@@ -408,12 +263,29 @@ function prepareProductData() {
 document.getElementById('btn-save').onclick = () => {
     const productData = prepareProductData();
     if (productData) {
-        pendingProductData = productData;
-        showPasswordModal();
+        push(stockRef, productData)
+            .then(() => {
+                alert("Producto publicado correctamente");
+                document.getElementById('nombre').value = "";
+                document.getElementById('precio').value = "";
+                document.getElementById('peso').value = "";
+                document.getElementById('tiempo').value = "";
+                document.getElementById('material').value = "";
+                document.getElementById('stock').value = "1";
+                document.getElementById('descripcion').value = "";
+                document.getElementById('img-url-final').value = "";
+                document.getElementById('preview-box').style.display = 'none';
+                document.getElementById('btn-save').disabled = true;
+                document.getElementById('status-txt').innerText = "Seleccionar imagen del producto";
+                document.getElementById('input-foto').value = "";
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error al publicar el producto");
+            });
     }
 };
 
-// ========================= EDITAR PRODUCTO (Modal) =========================
 function openEditModal(id, product) {
     currentEditId = id;
     document.getElementById('edit-id').value = id;
@@ -469,35 +341,6 @@ document.getElementById('btn-cancel-edit').onclick = () => {
     currentEditId = null;
 };
 
-// Configurar eventos del modal de contraseña
-document.getElementById('confirmPasswordBtn').onclick = verifyPasswordAndSave;
-document.getElementById('cancelPasswordBtn').onclick = () => {
-    hidePasswordModal();
-    pendingProductData = null;
-};
-
-// Permitir enviar con Enter en el campo de contraseña
-document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        verifyPasswordAndSave();
-    }
-});
-
-// Cerrar modal al hacer clic fuera
-window.onclick = (e) => {
-    const modal = document.getElementById('editModal');
-    if (e.target === modal) {
-        modal.style.display = 'none';
-        currentEditId = null;
-    }
-    const pwdModal = document.getElementById('passwordModal');
-    if (e.target === pwdModal) {
-        hidePasswordModal();
-        pendingProductData = null;
-    }
-};
-
-// ========================= ESCUCHAR CAMBIOS Y MOSTRAR TABLA =========================
 function getBadgeClass(categoria) {
     const badges = {
         'decorativo': 'badge-decorativo',
@@ -513,9 +356,16 @@ function formatCategoryName(categoria) {
         'decorativo': 'Decorativo',
         'funcional': 'Funcional',
         'personalizado': 'Personalizado',
-        'tecnico': 'Técnico'
+        'tecnico': 'Tecnico'
     };
     return names[categoria] || categoria;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 onValue(stockRef, (snapshot) => {
@@ -577,19 +427,12 @@ onValue(stockRef, (snapshot) => {
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.onclick = () => {
             const id = btn.getAttribute('data-id');
-            if (confirm("¿Eliminar este producto permanentemente?")) {
+            if (confirm("Eliminar este producto permanentemente?")) {
                 remove(ref(db, 'productos/' + id));
             }
         };
     });
 });
-
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
 </script>
 </body>
 </html>
