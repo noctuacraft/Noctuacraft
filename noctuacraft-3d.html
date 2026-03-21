@@ -1,43 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="assets/img/logo2.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noctuacraft 3D - Impresión 3D Personalizada</title>
-    <meta name="robots" content="index, follow">
-
-    <meta name="description" content="Servicios profesionales de impresión 3D. Modelos personalizados, prototipos y piezas únicas con la Artillery Hornet.">
-    <link rel="icon" href="assets/img/logo2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Noctuacraft 3D - Impresión 3D Profesional</title>
+    <meta name="description" content="Impresión 3D profesional: prototipos técnicos, piezas funcionales y regalos únicos con acabado industrial.">
     
-    <!-- Fuentes -->
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
     <link rel="stylesheet" href="assets/styles-3d.css">
+    <style>
+        /* Estilos adicionales para paginación */
+        .load-more-container {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+        .load-more-btn {
+            background: linear-gradient(135deg, #7209b7, #b5179e);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .load-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(114, 9, 183, 0.3);
+        }
+        .load-more-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .gallery-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Responsive para móvil */
+        @media (max-width: 768px) {
+            .gallery-3d {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .load-more-btn {
+                padding: 10px 24px;
+                font-size: 0.9rem;
+                width: auto;
+                min-width: 180px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .gallery-3d {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .gallery-3d {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .print-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .print-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-    <!-- Pantalla de carga optimizada -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo"> 
-            <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
-        </div>
-        <div class="loading-text">Calibrando impresora... 🔧</div>
-        <div class="loading-bar">
-            <div class="loading-progress" id="loadingProgress"></div>
-        </div>
-    </div>
-
-    <!-- Efecto de código en el fondo -->
-    <div class="code-effect" id="codeEffect"></div>
-
-    <!-- Overlay para menú móvil -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Modal para impresiones 3D -->
+    <!-- Modal -->
     <div class="modal" id="printModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
@@ -54,240 +104,139 @@
         </div>
     </div>
 
-    <!-- Elementos flotantes -->
-    <div class="floating-duck" id="floatingDuck" title="¡Imprimiendo en 3D! 🐤🖨️" aria-label="Pato mascota de Noctuacraft">
-        🐤
-    </div>
-    
-    <div class="filament-counter">
-        <span>🖨️</span>
-        <span id="filamentUsed">0</span>g de filamento usado
-    </div>
+    <div class="floating-duck" id="floatingDuck" title="Impresión 3D">🐤</div>
 
-    <!-- Header -->
     <header id="mainHeader">
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <div class="logo-img">
-                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+                    <img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image"> 
                 </div>
                 <span>Noctuacraft</span>
             </a>
                 
-            <!-- Navegación de escritorio -->
             <nav class="desktop-nav">
                 <ul>
-                    <li><a href="index.html#inicio">Inicio</a></li>
-                    <li><a href="index.html#sobre-mi">Sobre Mí</a></li>
-                    <li><a href="index.html#habilidades">Habilidades</a></li>
-                    <li><a href="index.html#proyectos">Proyectos</a></li>
-                    <li><a href="#inicio" class="active nav-3d-link">Noctuacraft 3D</a></li>
-                    <li><a href="index.html#publicidad">Publicidad</a></li>
-                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#galeria">Galería</a></li>
+                    <li><a href="#materiales">Materiales</a></li>
+                    <li><a href="#cotizador">Cotizar</a></li>
                 </ul>
             </nav>
             
-            <!-- Menú hamburguesa para móviles -->
             <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
             
-            <!-- Navegación móvil -->
             <nav class="mobile-nav" id="mobileNav">
                 <ul>
-                    <li><a href="index.html#inicio">Inicio</a></li>
-                    <li><a href="index.html#sobre-mi">Sobre Mí</a></li>
-                    <li><a href="index.html#habilidades">Habilidades</a></li>
-                    <li><a href="index.html#proyectos">Proyectos</a></li>
-                    <li><a href="#inicio" class="active nav-3d-link">Noctuacraft 3D</a></li>
-                    <li><a href="index.html#publicidad">Publicidad</a></li>
-                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#galeria">Galería</a></li>
+                    <li><a href="#materiales">Materiales</a></li>
+                    <li><a href="#cotizador">Cotizar</a></li>
                 </ul>
-                
                 <div class="nav-divider"></div>
-                
                 <div class="nav-footer">
                     <p>Noctuacraft 3D</p>
-                    <div class="nav-filament">
-                        <span>🖨️</span>
-                        <span>Impresión 3D</span>
-                    </div>
+                    <div class="nav-filament"><span>🖨️</span><span>Impresión 3D</span></div>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section 3D -->
     <section class="hero-3d" id="inicio">
         <div class="hero-bg">
             <div class="stars" id="stars"></div>
             <div class="layer-3d" id="layer3d"></div>
         </div>
         <div class="hero-content">
-            <h1 class="splash-title">Noctuacraft 3D</h1>
-            <p>Transformando ideas digitales en objetos físicos. Servicios profesionales de impresión 3D con calidad y precisión excepcionales.</p>
+            <h1 class="splash-title">De Bits a Átomos: Impresión 3D Profesional</h1>
+            <p>Convertimos tus archivos STL o ideas en objetos reales. Prototipos técnicos, piezas funcionales y regalos únicos con acabado industrial.</p>
             <div class="hero-buttons">
                 <a href="#galeria" class="cta-button">Ver Galería</a>
                 <a href="#cotizador" class="cta-button secondary">Cotizar Proyecto</a>
-                <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20un%20servicio%20de%20impresión%203D" class="whatsapp-button" target="_blank" rel="noopener">
-                    <span>💬</span> Consultar por WhatsApp
-                </a>
+                <a href="https://wa.me/5491160244156?text=Hola%20Quiero%20imprimir%20un%20proyecto%203D" class="whatsapp-button" target="_blank">Consultar</a>
             </div>
         </div>
     </section>
 
-    <!-- Especialidades -->
-    <section class="specialties" id="especialidades">
-        <h2 class="section-title">Nuestras Especialidades</h2>
-        <div class="specs-grid">
-            <div class="spec-card">
-                <div class="spec-icon">🎨</div>
-                <h3>Modelos Personalizados</h3>
-                <p>Diseños únicos adaptados a tus necesidades específicas</p>
-            </div>
-            <div class="spec-card">
-                <div class="spec-icon">🔧</div>
-                <h3>Prototipos</h3>
-                <p>Desarrollo rápido de prototipos funcionales</p>
-            </div>
-            <div class="spec-card">
-                <div class="spec-icon">🎁</div>
-                <h3>Regalos Personalizados</h3>
-                <p>Objetos únicos con significado especial</p>
-            </div>
-            <div class="spec-card">
-                <div class="spec-icon">⚙️</div>
-                <h3>Piezas Técnicas</h3>
-                <p>Componentes mecánicos y funcionales</p>
-            </div>
+    <section class="gallery-section" id="galeria">
+        <h2 class="section-title">Galería de Impresiones</h2>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="decorativo">Decorativo</button>
+            <button class="filter-btn" data-filter="funcional">Funcional</button>
+            <button class="filter-btn" data-filter="personalizado">Personalizado</button>
+            <button class="filter-btn" data-filter="tecnico">Técnico</button>
+        </div>
+        <div class="gallery-3d" id="dynamicGallery">
+            <div style="text-align:center; padding:2rem;">Cargando productos...</div>
+        </div>
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+            <button class="load-more-btn" id="loadMoreBtn">
+                Ver más productos
+                <span>↓</span>
+            </button>
         </div>
     </section>
 
-<!-- Galería 3D (se generará dinámicamente) -->
-<section class="gallery-section" id="galeria">
-    <h2 class="section-title">Galería de Impresiones</h2>
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <button class="filter-btn" data-filter="decorativo">Decorativo</button>
-        <button class="filter-btn" data-filter="funcional">Funcional</button>
-        <button class="filter-btn" data-filter="personalizado">Personalizado</button>
-        <button class="filter-btn" data-filter="tecnico">Técnico</button>
-    </div>
-    
-    <div class="gallery-3d" id="dynamicGallery">
-        <!-- La galería se generará aquí automáticamente -->
-    </div>
-</section>
-
-    <!-- Maquinaria -->
     <section class="machinery-section" id="maquinaria">
         <h2 class="section-title">Nuestra Tecnología</h2>
         <div class="machinery-container">
             <div class="printer-card">
                 <div class="printer-img-container">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUtLp8pdWH_JAItJdkSc0byI0pnbQR4xsBw&s" alt="Artillery Hornet 3D Printer" class="printer-img">
+                    <img src="assets/img/kobra3v2.svg" alt="Anycubic Kobra 3 V2 Combo" class="printer-img">
                 </div>
                 <div class="printer-info">
-                    <h3>Artillery Hornet</h3>
+                    <h3>Anycubic Kobra 3 V2 COMBO</h3>
                     <div class="printer-specs">
-                        <div class="spec-item">
-                            <span class="spec-label">Volumen de impresión:</span>
-                            <span class="spec-value">220x220x250mm</span>
-                        </div>
-                        <div class="spec-item">
-                            <span class="spec-label">Resolución:</span>
-                            <span class="spec-value">0.05 - 0.3mm</span>
-                        </div>
-                        <div class="spec-item">
-                            <span class="spec-label">Velocidad:</span>
-                            <span class="spec-value">hasta 150mm/s</span>
-                        </div>
-                        <div class="spec-item">
-                            <span class="spec-label">Extrusor:</span>
-                            <span class="spec-value">Directo Titan</span>
-                        </div>
+                        <div class="spec-item"><span class="spec-label">Volumen:</span><span class="spec-value">250×250×260mm</span></div>
+                        <div class="spec-item"><span class="spec-label">Velocidad:</span><span class="spec-value">600mm/s</span></div>
                     </div>
-                    <p class="printer-desc">Impresora 3D de alta precisión con sistema de extrusión directa, cama caliente y nivelación automática. Ideal para proyectos que requieren detalles finos y acabados profesionales.</p>
-                    <a href="https://www.creativo3d.com/artillery-hornet-guia" class="printer-link" target="_blank" rel="noopener">
-                        Ver ficha técnica completa →
-                    </a>
+                    <p class="printer-desc">Alta Velocidad · Multicolor · Piezas complejas</p>
                 </div>
-            </div>
-
-<!-- Kobra 3 V2 COMBO -->
-<div class="printer-card">
-    <div class="printer-img-container">
-        <img src="assets/img/kobra3v2.png" alt="Anycubic Kobra 3 V2 Combo" class="printer-img">
-    </div>
-    <div class="printer-info">
-        <h3>Anycubic Kobra 3 V2 COMBO</h3>
-
-        <div class="printer-specs">
-            <div class="spec-item">
-                <span class="spec-label">Volumen de impresión:</span>
-                <span class="spec-value">250×250×260mm</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-label">Resolución:</span>
-                <span class="spec-value">0.05 - 0.2mm</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-label">Velocidad:</span>
-                <span class="spec-value">hasta 600mm/s</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-label">Extrusor:</span>
-                <span class="spec-value">Direct Drive de alto flujo</span>
             </div>
         </div>
 
-        <p class="printer-desc">
-            Impresora 3D de nueva generación con calibración automática, movimiento reforzado y 
-            combo con estación AMS para cambios de color y materiales en un mismo proyecto. 
-            Ideal para piezas complejas, prototipado rápido y trabajos multicolor.
-        </p>
-
-        <a href="https://3dwork.io/anycubic-kobra-3-combo-v2/" class="printer-link" target="_blank" rel="noopener">
-            Ver ficha técnica completa →
-        </a>
-    </div>
-</div>
-
-        <!-- Materiales -->
-        <div class="materials-section">
+        <div class="materials-section" id="materiales">
             <h3>Materiales Disponibles</h3>
-            <div class="materials-grid">
-                <div class="material-card">
-                    <div class="material-color" style="background-color: #ffffff"></div>
-                    <h4>PLA</h4>
-                    <p>Perfecto para modelos decorativos y prototipos</p>
-                    <span class="material-price">$140/g</span>
-                </div>
-                <div class="material-card">
-                    <div class="material-color" style="background-color: #ff6b6b"></div>
-                    <h4>PLA+</h4>
-                    <p>Mayor resistencia y mejor acabado superficial</p>
-                    <span class="material-price">$160/g</span>
-                </div>
-                <div class="material-card">
-                    <div class="material-color" style="background-color: #4ecdc4"></div>
-                    <h4>PETG</h4>
-                    <p>Resistente al impacto y condiciones ambientales</p>
-                    <span class="material-price">$180/g</span>
-                </div>
-                <div class="material-card">
-                    <div class="material-color" style="background-color: #ffe66d"></div>
-                    <h4>TPU</h4>
-                    <p>Flexible para piezas que requieren elasticidad</p>
-                    <span class="material-price">$220/g</span>
-                </div>
+            <div class="materials-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Resistencia</th>
+                            <th>Uso Ideal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PLA</td>
+                            <td>Estándar</td>
+                            <td>Modelos decorativos, prototipos</td>
+                        </tr>
+                        <tr>
+                            <td>PLA+</td>
+                            <td>Media-Alta</td>
+                            <td>Piezas funcionales, mejor acabado</td>
+                        </tr>
+                        <tr>
+                            <td>PETG</td>
+                            <td>Alta</td>
+                            <td>Exterior, impacto, condiciones ambientales</td>
+                        </tr>
+                        <tr>
+                            <td>TPU</td>
+                            <td>Flexible</td>
+                            <td>Piezas elásticas, agarres, fundas</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <p class="price-note">* Consulte precios según material y cantidad en el cotizador</p>
         </div>
     </section>
 
-    <!-- Cotizador -->
     <section class="quote-section" id="cotizador">
         <h2 class="section-title">Cotizador Online</h2>
         <div class="quote-container">
@@ -296,7 +245,7 @@
                 <form id="quoteForm">
                     <div class="form-group">
                         <label for="projectType">Tipo de Proyecto</label>
-                        <select id="projectType" name="projectType" required>
+                        <select id="projectType" required>
                             <option value="">Seleccionar tipo</option>
                             <option value="decorativo">Modelo Decorativo</option>
                             <option value="funcional">Pieza Funcional</option>
@@ -306,9 +255,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="material">Material Preferido</label>
-                        <select id="material" name="material" required>
-                            <option value="">Seleccionar material</option>
+                        <label for="material">Material</label>
+                        <select id="material" required>
+                            <option value="">Seleccionar</option>
                             <option value="pla">PLA</option>
                             <option value="pla-plus">PLA+</option>
                             <option value="petg">PETG</option>
@@ -316,198 +265,516 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="quantity">Cantidad de Unidades</label>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                        <label for="quantity">Cantidad</label>
+                        <input type="number" id="quantity" min="1" value="1" required>
                     </div>
                     <div class="form-group">
-                        <label for="urgency">Urgencia</label>
-                        <select id="urgency" name="urgency" required>
+                        <label for="urgency">Tiempo de entrega</label>
+                        <select id="urgency" required>
                             <option value="normal">Normal (5-7 días)</option>
                             <option value="urgent">Urgente (2-3 días)</option>
                             <option value="express">Express (24 horas)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="description">Descripción del Proyecto</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Describe tu proyecto, dimensiones aproximadas, uso previsto, etc..." required></textarea>
+                        <label for="description">Descripción / Archivo STL</label>
+                        <textarea id="description" rows="4" placeholder="Describa su proyecto o comparta un enlace a su archivo..." required></textarea>
                     </div>
                     <button type="submit" class="submit-btn">Solicitar Cotización</button>
                 </form>
             </div>
             <div class="quote-info">
-                <h3>¿Cómo Calculamos?</h3>
-                <div class="calculation-info">
-                    <div class="calc-item">
-                        <div class="calc-icon">🧵</div>
-                        <div>
-                            <h4>Filamento</h4>
-                            <p>Precio por gramo según material seleccionado</p>
-                        </div>
-                    </div>
-                    <div class="calc-item">
-                        <div class="calc-icon">⏱️</div>
-                        <div>
-                            <h4>Tiempo de Impresión</h4>
-                            <p>Costo por hora de máquina en funcionamiento</p>
-                        </div>
-                    </div>
-                    <div class="calc-item">
-                        <div class="calc-icon">🎨</div>
-                        <div>
-                            <h4>Diseño</h4>
-                            <p>Servicio de modelado 3D si es necesario</p>
-                        </div>
-                    </div>
-                    <div class="calc-item">
-                        <div class="calc-icon">🚀</div>
-                        <div>
-                            <h4>Urgencia</h4>
-                            <p>Recargo por servicios express</p>
-                        </div>
-                    </div>
-                </div>
                 <div class="price-example">
-                    <h4>Ejemplo de Precio</h4>
-                    <p>Un llavero personalizado en PLA (10g) cuesta aproximadamente <strong>$1400</strong></p>
+                    <h4>Referencia de precio</h4>
+                    <p>Un llavero personalizado en PLA (10g) desde <strong>$1400</strong></p>
+                    <p class="example-note">* El precio final depende del material, tiempo y complejidad</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Proceso de Trabajo -->
     <section class="process-section" id="proceso">
-        <h2 class="section-title">Nuestro Proceso</h2>
+        <h2 class="section-title">Cómo Funciona</h2>
         <div class="process-steps">
-            <div class="process-step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Consulta</h3>
-                    <p>Compartí tu idea o requerimientos</p>
-                </div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Diseño</h3>
-                    <p>Creación o adaptación del modelo 3D</p>
-                </div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Aprobación</h3>
-                    <p>Revisión y confirmación del diseño</p>
-                </div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Impresión</h3>
-                    <p>Producción con control de calidad</p>
-                </div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">5</div>
-                <div class="step-content">
-                    <h3>Entrega</h3>
-                    <p>Envío o retiro del producto terminado</p>
-                </div>
-            </div>
+            <div class="process-step"><div class="step-number">1</div><div class="step-content"><h3>Consulta</h3><p>Envíanos tu idea o archivo STL por WhatsApp o el formulario</p></div></div>
+            <div class="process-step"><div class="step-number">2</div><div class="step-content"><h3>Presupuesto</h3><p>Recibís costo y tiempo estimado en menos de 2 horas</p></div></div>
+            <div class="process-step"><div class="step-number">3</div><div class="step-content"><h3>Envío</h3><p>Retirás personalmente o recibís tu pieza terminada</p></div></div>
         </div>
     </section>
 
-
-
-
-    <!-- Contacto Específico 3D -->
     <section class="contact-3d" id="contacto-3d">
         <h2 class="section-title">¿Listo para Crear?</h2>
         <div class="contact-3d-container">
-            <div class="contact-3d-info">
-                <div class="contact-highlight">
-                    <div class="highlight-icon">🖨️</div>
-                    <div>
-                        <h3>Consultas Técnicas</h3>
-                        <p>Asesoramiento gratuito para tu proyecto 3D</p>
-                    </div>
-                </div>
-                <div class="contact-highlight">
-                    <div class="highlight-icon">💬</div>
-                    <div>
-                        <h3>Respuesta Rápida</h3>
-                        <p>Te respondemos en menos de 2 horas</p>
-                    </div>
-                </div>
-                <div class="contact-highlight">
-                    <div class="highlight-icon">🎯</div>
-                    <div>
-                        <h3>Presupuesto Sin Compromiso</h3>
-                        <p>Cotización detallada y transparente</p>
-                    </div>
-                </div>
-            </div>
             <div class="contact-3d-action">
                 <h3>Empecemos Tu Proyecto</h3>
-                <p>Contanos sobre tu idea y te ayudamos a hacerla realidad</p>
+                <p>Contanos tu idea y te ayudamos a hacerla realidad</p>
                 <div class="action-buttons">
-                    <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20un%20servicio%20de%20impresión%203D%20y%20quiero%20consultar%20precios" class="whatsapp-button large" target="_blank" rel="noopener">
-                        <span>💬</span> WhatsApp Directo
-                    </a>
-                    <a href="mailto:tu-email@noctuacraft.com?subject=Consulta%20Impresión%203D" class="email-button">
-                        <span>📧</span> Enviar Email
-                    </a>
+                    <a href="https://wa.me/5491160244156?text=Hola%20Quiero%20imprimir%20un%20proyecto%203D" class="whatsapp-button large" target="_blank">WhatsApp Directo</a>
+                    <a href="mailto:3d@noctuacraft.com?subject=Consulta%20Impresión%203D" class="email-button">Enviar Email</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="logo">
-                <div class="logo-img">
-                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image">
-                </div>
+                <div class="logo-img"><img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image"></div>
                 <span>Noctuacraft</span>
             </div>
             <p>Donde las ideas cobran vida bajo la luz de la luna</p>
             <div class="social-links">
-<a href="https://instagram.com/Noctuacraft.web" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="Instagram de Noctuacraft">
-    <i class="fab fa-instagram"></i>
-</a>
-
-<a href="https://www.facebook.com/profile.php?id=61581769076622" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="Facebook de Noctuacraft">
-    <i class="fab fa-facebook"></i>
-</a>
-
-<a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="WhatsApp de Noctuacraft">
-    <i class="fab fa-whatsapp"></i>
-</a>
+                <a href="https://instagram.com/Noctuacraft.web" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61581769076622" class="social-link" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/5491160244156" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
-            <p class="copyright">
-                &copy;  2025 - <span id="year"></span> Noctuacraft. Todos los derechos reservados.
-                Fundado por Frederick Joaquín Riedel Padilla.
-            </p>
+            <p class="copyright">&copy; 2025 - <span id="year"></span> Noctuacraft. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Navideño (solo se activa del 20 al 25 de diciembre) -->
-    <script src="assets/christmas.js"></script>
+<script type="module">
+// ============================================
+// CONEXIÓN CON FIREBASE - GALERÍA EN TIEMPO REAL
+// ============================================
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyCETIGd2eehtCA7I4MAcNyr-cFmIoBDLfU",
+    databaseURL: "https://noctua-stock-default-rtdb.firebaseio.com",
+    projectId: "noctua-stock",
+    appId: "1:812703979866:web:1bbce7166ed1b738af3b63"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const productosRef = ref(db, 'productos');
+
+// Variables globales
+let productosFirebase = [];
+let currentDisplayCount = 0;
+let itemsPerPage = 0;
+
+// Detectar cantidad de items según el ancho de pantalla
+function getItemsPerPage() {
+    const width = window.innerWidth;
+    if (width <= 768) {
+        return 3; // Móvil: 3 productos iniciales
+    } else if (width <= 1024) {
+        return 4; // Tablet: 4 productos iniciales
+    } else {
+        return 6; // Escritorio: 6 productos iniciales (2 filas de 3)
+    }
+}
+
+// ============================================
+// FUNCIONES DE LA GALERÍA
+// ============================================
+
+function getCategoryName(cat) {
+    const map = { decorativo: "Decorativo", funcional: "Funcional", personalizado: "Personalizado", tecnico: "Técnico" };
+    return map[cat] || cat;
+}
+
+function getBadgeForCategory(cat) {
+    const map = { decorativo: "Decorativo", funcional: "Funcional", personalizado: "Personalizado", tecnico: "Técnico" };
+    return map[cat] || cat;
+}
+
+// Crear tarjeta individual
+function createPrintCard(id, product) {
+    const card = document.createElement('div');
+    card.className = 'print-card';
+    card.setAttribute('data-print', id);
+    card.setAttribute('data-category', product.categoria || 'decorativo');
     
-    <!-- JavaScript -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-     <script src="assets/script-3d.js"></script>
+    const badgeText = getBadgeForCategory(product.categoria);
+    const imgSrc = product.img || 'assets/img/Noctuacraft3D/default.jpg';
+    const titulo = product.nombre || 'Producto 3D';
+    const descripcion = product.descripcion || `Modelo 3D de categoría ${product.categoria || 'general'}`;
+    const tiempo = product.tiempo || '2-4 horas';
+    const material = product.material || 'PLA';
+    const precio = product.precio || 'Consultar';
+    
+    card.innerHTML = `
+        <div class="print-badge">${badgeText}</div>
+        <img src="${imgSrc}" alt="${titulo}" class="print-img" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYjI2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBubyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
+        <div class="print-info">
+            <h3 class="print-title">${escapeHtml(titulo)}</h3>
+            <p class="print-desc">${escapeHtml(descripcion.substring(0, 100))}${descripcion.length > 100 ? '...' : ''}</p>
+            <div class="print-meta">
+                <span class="print-time">Tiempo de impresión: <br>${tiempo}</span>
+                <span class="print-material">Material: ${material}</span>
+                <span class="print-price">Precio: $${precio}</span>
+            </div>
+            <span class="print-more">Ver detalles →</span>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Escapar HTML
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Mostrar productos con paginación
+function displayProducts() {
+    const galleryContainer = document.getElementById('dynamicGallery');
+    if (!galleryContainer) return;
+    
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    const totalProducts = productosFirebase.length;
+    
+    if (totalProducts === 0) {
+        galleryContainer.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(233, 226, 214, 0.5);">
+                <h3>No hay productos disponibles</h3>
+                <p>Agregue productos desde el panel de administración</p>
+            </div>
+        `;
+        loadMoreContainer.style.display = 'none';
+        return;
+    }
+    
+    // Limpiar contenedor pero mantener los productos ya mostrados
+    const existingCards = galleryContainer.querySelectorAll('.print-card');
+    if (currentDisplayCount === 0) {
+        galleryContainer.innerHTML = '';
+    }
+    
+    // Mostrar solo los nuevos productos
+    const startIndex = existingCards.length;
+    const endIndex = Math.min(currentDisplayCount, totalProducts);
+    
+    for (let i = startIndex; i < endIndex; i++) {
+        const product = productosFirebase[i];
+        const card = createPrintCard(product.id, product);
+        galleryContainer.appendChild(card);
+        
+        // Animación escalonada
+        setTimeout(() => {
+            card.classList.add('visible');
+        }, (i - startIndex) * 50);
+    }
+    
+    // Mostrar u ocultar botón "Ver más"
+    if (currentDisplayCount < totalProducts) {
+        loadMoreContainer.style.display = 'block';
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const remaining = totalProducts - currentDisplayCount;
+        loadMoreBtn.innerHTML = `Ver más productos (${remaining} restantes) ↓`;
+        loadMoreBtn.disabled = false;
+    } else {
+        loadMoreContainer.style.display = 'none';
+    }
+    
+    // Reconfigurar eventos después de agregar nuevas tarjetas
+    setTimeout(() => {
+        setupGalleryFilters();
+        setupPrintModal();
+    }, 100);
+}
+
+// Cargar más productos
+function loadMoreProducts() {
+    const totalProducts = productosFirebase.length;
+    const increment = getItemsPerPage();
+    const newCount = Math.min(currentDisplayCount + increment, totalProducts);
+    currentDisplayCount = newCount;
+    displayProducts();
+}
+
+// Generar galería completa (reiniciar paginación)
+function generateGalleryFromFirebase() {
+    const galleryContainer = document.getElementById('dynamicGallery');
+    if (!galleryContainer) return;
+    
+    // Resetear estado
+    currentDisplayCount = getItemsPerPage();
+    galleryContainer.innerHTML = '';
+    
+    if (productosFirebase.length === 0) {
+        galleryContainer.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(233, 226, 214, 0.5);">
+                <h3>No hay productos disponibles</h3>
+                <p>Agregue productos desde el panel de administración</p>
+            </div>
+        `;
+        document.getElementById('loadMoreContainer').style.display = 'none';
+        return;
+    }
+    
+    displayProducts();
+}
+
+// Configurar filtros
+function setupGalleryFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    if (!filterBtns.length) return;
+    
+    filterBtns.forEach(btn => {
+        btn.removeEventListener('click', handleFilter);
+        btn.addEventListener('click', handleFilter);
+    });
+    
+    function handleFilter() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.getAttribute('data-filter');
+        
+        // Al filtrar, mostrar todos los productos que cumplan el filtro
+        const allCards = document.querySelectorAll('.print-card');
+        let visibleCount = 0;
+        
+        allCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Ocultar botón "Ver más" si hay filtro activo
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        if (filter !== 'all') {
+            loadMoreContainer.style.display = 'none';
+        } else {
+            // Si es "todos", mostrar botón si hay más productos por mostrar
+            const totalShown = currentDisplayCount;
+            if (totalShown < productosFirebase.length) {
+                loadMoreContainer.style.display = 'block';
+            }
+        }
+    }
+}
+
+// Configurar modal
+function setupPrintModal() {
+    const modal = document.getElementById('printModal');
+    const modalClose = document.getElementById('modalClose');
+    
+    if (!modal || !modalClose) return;
+    
+    const gallery = document.querySelector('.gallery-3d');
+    if (!gallery) return;
+    
+    gallery.addEventListener('click', (e) => {
+        const card = e.target.closest('.print-card');
+        if (!card) return;
+        
+        const printId = card.getAttribute('data-print');
+        const data = productosFirebase.find(p => p.id === printId);
+        
+        if (!data) return;
+        
+        const modalImg = document.getElementById('modalImg');
+        modalImg.src = data.img || '';
+        modalImg.alt = data.nombre || 'Producto';
+        
+        document.getElementById('modalTitle').textContent = data.nombre || 'Producto 3D';
+        document.getElementById('modalDesc').textContent = data.descripcion || 'Sin descripción disponible.';
+        
+        const modalDetails = document.getElementById('modalDetails');
+        modalDetails.innerHTML = '';
+        
+        const details = [
+            { label: 'Tiempo de impresión', value: data.tiempo || '2-4 horas' },
+            { label: 'Material usado', value: data.material || 'PLA' },
+            { label: 'Peso aproximado', value: data.peso ? `${data.peso}g` : 'Consultar' },
+            { label: 'Categoría', value: getCategoryName(data.categoria) },
+            { label: 'Precio', value: `$${data.precio || 'Consultar'}` }
+        ];
+        
+        if (data.especificaciones && typeof data.especificaciones === 'object') {
+            Object.entries(data.especificaciones).forEach(([key, value]) => {
+                details.push({ label: key, value: value });
+            });
+        }
+        
+        details.forEach(detail => {
+            const div = document.createElement('div');
+            div.className = 'detail-item';
+            div.innerHTML = `
+                <div class="detail-label">${detail.label}</div>
+                <div class="detail-value">${detail.value}</div>
+            `;
+            modalDetails.appendChild(div);
+        });
+        
+        document.getElementById('quoteBtn').onclick = () => {
+            const message = `Hola, me interesa una cotización para el modelo: "${data.nombre}". Precio: $${data.precio || 'a definir'}. ¿Podría darme más información?`;
+            window.open(`https://wa.me/5491160244156?text=${encodeURIComponent(message)}`, '_blank');
+        };
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    modalClose.onclick = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// Sistema de cotización
+function setupQuoteSystem() {
+    const form = document.getElementById('quoteForm');
+    if (!form) return;
+    
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const projectType = document.getElementById('projectType')?.value || '';
+        const material = document.getElementById('material')?.value || '';
+        const quantity = document.getElementById('quantity')?.value || 1;
+        const urgency = document.getElementById('urgency')?.value || 'normal';
+        const description = document.getElementById('description')?.value || '';
+        
+        if (!projectType || !material || !description) {
+            alert('Por favor, complete todos los campos.');
+            return;
+        }
+        
+        const urgencyText = {
+            'normal': 'Normal (5-7 días)',
+            'urgent': 'Urgente (2-3 días)',
+            'express': 'Express (24 horas)'
+        }[urgency] || 'Normal (5-7 días)';
+        
+        const message = `Hola, solicito cotización para impresión 3D:%0ATipo de Proyecto: ${projectType}%0AMaterial: ${material}%0ACantidad: ${quantity} unidades%0AUrgencia: ${urgencyText}%0ADescripción: ${description}`;
+        
+        window.open(`https://wa.me/5491160244156?text=${message}`, '_blank');
+        form.reset();
+        alert('Cotización enviada. Te contactaremos por WhatsApp.');
+    });
+}
+
+// Menú móvil
+function setupMobileMenu() {
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    
+    if (!menuToggle || !mobileNav) return;
+    
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        if (mobileOverlay) mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            if (mobileOverlay) mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+}
+
+// Scroll suave
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                }
+            }
+        });
+    });
+}
+
+// ============================================
+// ESCUCHA EN TIEMPO REAL DE FIREBASE
+// ============================================
+onValue(productosRef, (snapshot) => {
+    const data = snapshot.val();
+    productosFirebase = [];
+    
+    if (data) {
+        Object.entries(data).forEach(([id, value]) => {
+            productosFirebase.push({ id, ...value });
+        });
+        // Ordenar por fecha de agregado (más nuevos primero)
+        productosFirebase.sort((a, b) => (b.fechaAgregado || '').localeCompare(a.fechaAgregado || ''));
+    }
+    
+    // Resetear paginación con nuevo tamaño de pantalla
+    itemsPerPage = getItemsPerPage();
+    currentDisplayCount = itemsPerPage;
+    generateGalleryFromFirebase();
+});
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year').textContent = new Date().getFullYear();
+    setupMobileMenu();
+    setupSmoothScroll();
+    setupQuoteSystem();
+    
+    // Configurar botón "Ver más"
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMoreProducts);
+    }
+    
+    // Recalcular al cambiar tamaño de pantalla
+    window.addEventListener('resize', () => {
+        const newItemsPerPage = getItemsPerPage();
+        if (newItemsPerPage !== itemsPerPage) {
+            itemsPerPage = newItemsPerPage;
+            currentDisplayCount = itemsPerPage;
+            generateGalleryFromFirebase();
+        }
+    });
+});
+
+// Acceso secreto a admin
+let buffer = "";
+window.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
+    if (key.length === 1) buffer += key;
+    if (buffer.length > 6) buffer = buffer.slice(-6);
+    if (buffer === "noctua") {
+        window.location.href = "admin.html";
+        buffer = "";
+    }
+});
+</script>
 </body>
 </html>

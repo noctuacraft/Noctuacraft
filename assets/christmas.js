@@ -10,9 +10,7 @@
     
     if (!esNavidad) {
         return; // No es época navideña, salir del script
-    }
-    
-    console.log('🎄 ¡Es época navideña! Activando decoraciones...');
+    };
     
     // ============================================
     // 1. AGREGAR ESTILOS NAVIDEÑOS
@@ -360,14 +358,6 @@
             }
         });
         
-        // Intentar reproducir automáticamente (puede requerir interacción del usuario)
-        setTimeout(() => {
-            musica.play().catch(e => {
-                console.log('La música requiere interacción del usuario:', e.message);
-                botonMusica.innerHTML = '▶️';
-                botonMusica.title = 'Reproducir música navideña (click para activar)';
-            });
-        }, 2000);
     }
     
     // ============================================
@@ -380,13 +370,7 @@
             // Descomenta la siguiente línea si quieres música
             // agregarMusicaOpcional();
             
-            // Log en consola
-            console.log(`
-            🎅 ¡Feliz Navidad desde Noctuacraft! 🎄
-            ⛄ Decoraciones activadas del 20 al 25 de diciembre
-            ❄️ Nieve, luces y magia en tu código
-            🦌 Patroclo también celebra la Navidad
-            `);
+
         }, 1000);
     });
     

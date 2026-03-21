@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Noctua Stock</title>
+    <style>
+        :root { --primary: #7209b7; --success: #27ae60; --warning: #f39c12; --danger: #e74c3c; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: auto; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; }
+        input, select, textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box; outline: none; font-family: inherit; }
+        textarea { resize: vertical; min-height: 80px; }
+        .upload-area { border: 2px dashed var(--primary); padding: 25px; text-align: center; border-radius: 10px; cursor: pointer; background: #f4e8ff; display: block; transition: all 0.3s; }
+        .upload-area:hover { background: #e9d5ff; border-color: #9b4dff; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+        .btn { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-add { background: var(--success); color: white; margin-top: 15px; }
+        .btn-add:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-edit { background: var(--warning); color: white; padding: 6px 12px; font-size: 11px; width: auto; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .btn-delete { background: var(--danger); color: white; padding: 6px 12px; font-size: 11px; width: auto; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-save-edit { background: var(--success); color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+        .btn-cancel-edit { background: #95a5a6; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; margin-left: 10px; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+        .badge-decorativo { background: #e84393; color: white; }
+        .badge-funcional { background: #3498db; color: white; }
+        .badge-personalizado { background: #f1c40f; color: #333; }
+        .badge-tecnico { background: #2ecc71; color: white; }
+        .action-buttons { display: flex; gap: 5px; }
+        .stock-badge { background: #27ae60; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; }
+        .loading { opacity: 0.6; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Panel de Stock Noctuacraft</h1>
+    
+    <!-- Formulario para agregar producto -->
+    <div class="card">
+        <h3>Agregar Nuevo Producto</h3>
+        <label class="upload-area" for="input-foto">
+            <strong id="status-txt">Seleccionar imagen del producto</strong>
+            <input type="file" id="input-foto" accept="image/*" style="display:none;">
+        </label>
+        
+        <div id="preview-box" style="display:none; margin-top:15px; align-items:center; gap:15px; background: #f0f0f0; padding: 10px; border-radius: 10px;">
+            <img id="img-preview" src="" style="width:70px; height:70px; object-fit:cover; border-radius:5px;">
+            <strong style="color:var(--success);">Imagen convertida a WebP</strong>
+        </div>
+
+        <div class="grid">
+            <input type="text" id="nombre" placeholder="Nombre del producto *">
+            <input type="number" id="precio" placeholder="Precio ($) *">
+        </div>
+        
+        <div class="grid">
+            <select id="categoria">
+                <option value="decorativo">Decorativo</option>
+                <option value="funcional">Funcional</option>
+                <option value="personalizado">Personalizado</option>
+                <option value="tecnico">Técnico</option>
+            </select>
+            <input type="number" id="peso" placeholder="Peso (gramos)" step="0.1">
+        </div>
+        
+        <div class="grid-3">
+            <input type="text" id="tiempo" placeholder="Tiempo impresión (ej: 2h 30min)">
+            <input type="text" id="material" placeholder="Material (ej: PLA, PETG)">
+            <input type="number" id="stock" placeholder="Stock disponible" value="1">
+        </div>
+        
+        <textarea id="descripcion" placeholder="Descripción detallada del producto..."></textarea>
+        
+        <input type="hidden" id="img-url-final">
+        <button id="btn-save" class="btn btn-add" disabled>Publicar en el catálogo</button>
+    </div>
+
+    <!-- Tabla de productos existentes -->
+    <div class="card" style="padding:0; overflow-x: auto;">
+        <h3 style="padding: 15px 15px 0 15px;">Productos en Stock</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Producto</th>
+                    <th>Detalles</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="lista-stock"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para editar (flotante) -->
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; border-radius:15px; padding:25px; max-width:500px; width:90%; max-height:80vh; overflow-y:auto;">
+        <h3 id="editModalTitle">Editar Producto</h3>
+        <input type="hidden" id="edit-id">
+        <div class="grid">
+            <input type="text" id="edit-nombre" placeholder="Nombre">
+            <input type="number" id="edit-precio" placeholder="Precio">
+        </div>
+        <div class="grid">
+            <select id="edit-categoria">
+                <option value="decorativo">Decorativo</option>
+                <option value="funcional">Funcional</option>
+                <option value="personalizado">Personalizado</option>
+                <option value="tecnico">Técnico</option>
+            </select>
+            <input type="number" id="edit-peso" placeholder="Peso (gramos)" step="0.1">
+        </div>
+        <div class="grid">
+            <input type="text" id="edit-tiempo" placeholder="Tiempo impresión">
+            <input type="text" id="edit-material" placeholder="Material">
+        </div>
+        <div class="grid">
+            <input type="number" id="edit-stock" placeholder="Stock">
+            <input type="text" id="edit-img" placeholder="URL de imagen">
+        </div>
+        <textarea id="edit-descripcion" rows="3" placeholder="Descripción"></textarea>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+            <button id="btn-confirm-edit" class="btn-save-edit">Guardar Cambios</button>
+            <button id="btn-cancel-edit" class="btn-cancel-edit">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyCETIGd2eehtCA7I4MAcNyr-cFmIoBDLfU",
+    databaseURL: "https://noctua-stock-default-rtdb.firebaseio.com",
+    projectId: "noctua-stock",
+    appId: "1:812703979866:web:1bbce7166ed1b738af3b63"
+};
+
+// Cloudinary config
+const CLOUD_NAME = "dmnz0evps";
+const UPLOAD_PRESET = "noctua_preset";
+
+// Init Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const stockRef = ref(db, 'productos');
+
+let currentEditId = null;
+
+// ========================= FUNCIÓN PARA CONVERTIR A WEBP ANTES DE SUBIR =========================
+async function convertToWebP(file) {
+    return new Promise((resolve, reject) => {
+        // Si ya es WebP, no reconvertir
+        if (file.type === 'image/webp') {
+            resolve(file);
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                // Crear canvas para convertir a WebP
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                
+                // Convertir a WebP con calidad 0.85 (balance entre calidad y tamaño)
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        const webpFile = new File([blob], file.name.replace(/\.[^/.]+$/, '.webp'), {
+                            type: 'image/webp',
+                            lastModified: Date.now()
+                        });
+                        resolve(webpFile);
+                    } else {
+                        reject(new Error('Error al convertir a WebP'));
+                    }
+                }, 'image/webp', 0.85);
+            };
+            img.onerror = () => reject(new Error('Error al cargar la imagen'));
+            img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error('Error al leer el archivo'));
+        reader.readAsDataURL(file);
+    });
+}
+
+// ========================= SUBIR IMAGEN CON CONVERSIÓN A WEBP =========================
+document.getElementById('input-foto').onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const statusTxt = document.getElementById('status-txt');
+    const uploadArea = document.querySelector('.upload-area');
+    
+    statusTxt.innerText = "Convertiendo a WebP...";
+    uploadArea.classList.add('loading');
+    
+    try {
+        // Convertir a WebP
+        const webpFile = await convertToWebP(file);
+        
+        statusTxt.innerText = "Subiendo imagen...";
+        
+        const formData = new FormData();
+        formData.append('file', webpFile);
+        formData.append('upload_preset', UPLOAD_PRESET);
+
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+
+        if (data.secure_url) {
+            document.getElementById('img-url-final').value = data.secure_url;
+            document.getElementById('img-preview').src = data.secure_url;
+            document.getElementById('preview-box').style.display = 'flex';
+            document.getElementById('btn-save').disabled = false;
+            statusTxt.innerText = "Imagen subida y convertida a WebP";
+        } else {
+            throw new Error('Error en la respuesta de Cloudinary');
+        }
+    } catch (err) {
+        console.error(err);
+        statusTxt.innerText = "Error al procesar la imagen";
+        alert("Error al procesar la imagen. Verifica el formato y vuelve a intentarlo.");
+    } finally {
+        uploadArea.classList.remove('loading');
+    }
+};
+
+// ========================= GUARDAR PRODUCTO =========================
+document.getElementById('btn-save').onclick = () => {
+    const nombre = document.getElementById('nombre').value;
+    const precio = document.getElementById('precio').value;
+    const categoria = document.getElementById('categoria').value;
+    const img = document.getElementById('img-url-final').value;
+    const peso = document.getElementById('peso').value;
+    const tiempo = document.getElementById('tiempo').value;
+    const material = document.getElementById('material').value;
+    const stock = document.getElementById('stock').value;
+    const descripcion = document.getElementById('descripcion').value;
+
+    if (!nombre || !precio || !img) {
+        alert("Complete nombre, precio y seleccione una imagen");
+        return;
+    }
+
+    push(stockRef, {
+        nombre: nombre.trim(),
+        precio: parseFloat(precio),
+        categoria,
+        img,
+        peso: parseFloat(peso) || 0,
+        tiempo: tiempo.trim() || "2-4 horas",
+        material: material.trim() || "PLA",
+        stock: parseInt(stock) || 1,
+        descripcion: descripcion.trim() || `Producto 3D de categoría ${categoria}`,
+        fechaAgregado: new Date().toISOString()
+    });
+
+    // Resetear formulario
+    document.getElementById('nombre').value = "";
+    document.getElementById('precio').value = "";
+    document.getElementById('peso').value = "";
+    document.getElementById('tiempo').value = "";
+    document.getElementById('material').value = "";
+    document.getElementById('stock').value = "1";
+    document.getElementById('descripcion').value = "";
+    document.getElementById('preview-box').style.display = 'none';
+    document.getElementById('btn-save').disabled = true;
+    document.getElementById('status-txt').innerText = "Seleccionar imagen del producto";
+    document.getElementById('img-url-final').value = "";
+    
+    alert("Producto agregado correctamente");
+};
+
+// ========================= EDITAR PRODUCTO (Modal) =========================
+function openEditModal(id, product) {
+    currentEditId = id;
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-nombre').value = product.nombre || "";
+    document.getElementById('edit-precio').value = product.precio || "";
+    document.getElementById('edit-categoria').value = product.categoria || "decorativo";
+    document.getElementById('edit-peso').value = product.peso || "";
+    document.getElementById('edit-tiempo').value = product.tiempo || "";
+    document.getElementById('edit-material').value = product.material || "";
+    document.getElementById('edit-stock').value = product.stock || "";
+    document.getElementById('edit-descripcion').value = product.descripcion || "";
+    document.getElementById('edit-img').value = product.img || "";
+    
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+document.getElementById('btn-confirm-edit').onclick = () => {
+    const id = currentEditId;
+    if (!id) return;
+    
+    const updatedData = {
+        nombre: document.getElementById('edit-nombre').value.trim(),
+        precio: parseFloat(document.getElementById('edit-precio').value),
+        categoria: document.getElementById('edit-categoria').value,
+        peso: parseFloat(document.getElementById('edit-peso').value) || 0,
+        tiempo: document.getElementById('edit-tiempo').value.trim(),
+        material: document.getElementById('edit-material').value.trim(),
+        stock: parseInt(document.getElementById('edit-stock').value) || 0,
+        descripcion: document.getElementById('edit-descripcion').value.trim(),
+        img: document.getElementById('edit-img').value.trim(),
+        fechaEditado: new Date().toISOString()
+    };
+    
+    if (!updatedData.nombre || isNaN(updatedData.precio)) {
+        alert("Nombre y precio son obligatorios");
+        return;
+    }
+    
+    update(ref(db, 'productos/' + id), updatedData)
+        .then(() => {
+            alert("Producto actualizado correctamente");
+            document.getElementById('editModal').style.display = 'none';
+            currentEditId = null;
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Error al actualizar el producto");
+        });
+};
+
+document.getElementById('btn-cancel-edit').onclick = () => {
+    document.getElementById('editModal').style.display = 'none';
+    currentEditId = null;
+};
+
+// Cerrar modal al hacer clic fuera
+window.onclick = (e) => {
+    const modal = document.getElementById('editModal');
+    if (e.target === modal) {
+        modal.style.display = 'none';
+        currentEditId = null;
+    }
+};
+
+// ========================= ESCUCHAR CAMBIOS Y MOSTRAR TABLA =========================
+function getBadgeClass(categoria) {
+    const badges = {
+        'decorativo': 'badge-decorativo',
+        'funcional': 'badge-funcional',
+        'personalizado': 'badge-personalizado',
+        'tecnico': 'badge-tecnico'
+    };
+    return badges[categoria] || 'badge-decorativo';
+}
+
+function formatCategoryName(categoria) {
+    const names = {
+        'decorativo': 'Decorativo',
+        'funcional': 'Funcional',
+        'personalizado': 'Personalizado',
+        'tecnico': 'Técnico'
+    };
+    return names[categoria] || categoria;
+}
+
+onValue(stockRef, (snapshot) => {
+    const tbody = document.getElementById('lista-stock');
+    tbody.innerHTML = "";
+
+    const productos = [];
+    snapshot.forEach(child => {
+        productos.push({ id: child.key, ...child.val() });
+    });
+    
+    // Ordenar por fecha de agregado (más nuevos primero)
+    productos.sort((a, b) => (b.fechaAgregado || '').localeCompare(a.fechaAgregado || ''));
+
+    if (productos.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="6" style="text-align:center; padding:40px;">No hay productos registrados. Agregue su primer producto.</td>`;
+        tbody.appendChild(row);
+        return;
+    }
+
+    productos.forEach(product => {
+        const row = document.createElement('tr');
+        
+        const stockClass = (product.stock || 0) <= 0 ? 'stock-badge' : '';
+        const stockText = (product.stock || 0) <= 0 ? 'Sin stock' : `${product.stock} unidades`;
+        const categoriaNombre = formatCategoryName(product.categoria);
+        
+        row.innerHTML = `
+            <td><img src="${product.img}" class="thumb" onerror="this.src='https://via.placeholder.com/60?text=No+img'"></td>
+            <td>
+                <strong>${escapeHtml(product.nombre)}</strong><br>
+                <span class="badge ${getBadgeClass(product.categoria)}">${categoriaNombre}</span>
+            </td>
+            <td style="font-size:12px">
+                <div>Peso: ${product.peso || 0}g</div>
+                <div>Tiempo: ${product.tiempo || 'N/A'}</div>
+                <div>Material: ${product.material || 'N/A'}</div>
+                <div>Desc: ${escapeHtml((product.descripcion || '').substring(0, 40))}${(product.descripcion || '').length > 40 ? '...' : ''}</div>
+            </td>
+            <td><strong>$${product.precio}</strong></td>
+            <td><span class="${stockClass}">${stockText}</span></td>
+            <td class="action-buttons">
+                <button class="btn-edit" data-id="${product.id}">Editar</button>
+                <button class="btn-delete" data-id="${product.id}">Eliminar</button>
+            </td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+    
+    // Asignar eventos a los botones después de renderizar
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.onclick = () => {
+            const id = btn.getAttribute('data-id');
+            const product = productos.find(p => p.id === id);
+            if (product) openEditModal(id, product);
+        };
+    });
+    
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.onclick = () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm("¿Eliminar este producto permanentemente?")) {
+                remove(ref(db, 'productos/' + id));
+            }
+        };
+    });
+});
+
+// Función para escapar HTML y prevenir XSS
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+</body>
+</html>

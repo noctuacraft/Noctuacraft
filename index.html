@@ -15,41 +15,59 @@
     <!-- Open Graph / Social Preview -->
     <meta property="og:title" content="Noctuacraft">
     <meta property="og:description" content="Servicios digitales personalizados: diseño web, diseño gráfico, programación y proyectos creativos hechos a medida.">
-    <meta property="og:image" content="https://noctuacraft.com.ar/assets/img/logo2.png">
+    <meta property="og:image" content="https://noctuacraft.com.ar/assets/img/logo2.svg">
     <meta property="og:url" content="https://noctuacraft.com.ar">
     <meta property="og:type" content="website">
 
     <!-- Structured Data para Google -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
+    <script type="application/ld+json">
     {
-      "@type": "Organization",
-      "name": "Noctuacraft",
-      "url": "https://noctuacraft.com.ar",
-      "logo": "https://noctuacraft.com.ar/assets/img/logo2.png",
-      "description": "Estudio creativo argentino especializado en desarrollo web, diseño gráfico, programación e impresión 3D.",
-      "founder": {
-        "@type": "Person",
-        "name": "Frederick Joaquín Riedel Padilla"
-      },
-      "member": [
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@type": "Person",
-          "name": "Thiago David Jacques Santamarina",
-          "jobTitle": "Responsable de impresión 3D",
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Noctuacraft"
+          "@type": "Organization",
+          "name": "Noctuacraft",
+          "url": "https://noctuacraft.com.ar",
+          "logo": "https://noctuacraft.com.ar/assets/img/logo2.svg",
+          "description": "Estudio creativo argentino especializado en desarrollo web, diseño gráfico, programación e impresión 3D.",
+          "founder": {
+            "@type": "Person",
+            "name": "Frederick Joaquín Riedel Padilla"
           },
-          "url": "https://noctuacraft.com.ar/noctuacraft-3d.html"
+          "member": [
+            {
+              "@type": "Person",
+              "name": "Thiago David Jacques Santamarina",
+              "jobTitle": "Responsable de impresión 3D",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Noctuacraft"
+              },
+              "url": "https://noctuacraft.com.ar/noctuacraft-3d.html"
+            },
+            {
+              "@type": "Person",
+              "name": "Gonzalo Facundo Campos Manco",
+              "jobTitle": "Desarrollador Backend",
+              "knowsAbout": ["PHP", "SQL", "Bases de datos"],
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Noctuacraft"
+              },
+              "url": "https://noctuacraft.com.ar"
+            }
+          ]
         },
         {
           "@type": "Person",
-          "name": "Gonzalo Facundo Campos Manco",
-          "jobTitle": "Desarrollador Backend",
-          "knowsAbout": ["PHP", "SQL", "Bases de datos"],
+          "name": "Frederick Joaquín Riedel Padilla",
+          "jobTitle": "Fundador y director creativo",
+          "knowsAbout": [
+            "Desarrollo web",
+            "Diseño gráfico",
+            "Dirección creativa",
+            "Programación"
+          ],
           "worksFor": {
             "@type": "Organization",
             "name": "Noctuacraft"
@@ -57,50 +75,19 @@
           "url": "https://noctuacraft.com.ar"
         }
       ]
-    },
-    {
-      "@type": "Person",
-      "name": "Frederick Joaquín Riedel Padilla",
-      "jobTitle": "Fundador y director creativo",
-      "knowsAbout": [
-        "Desarrollo web",
-        "Diseño gráfico",
-        "Dirección creativa",
-        "Programación"
-      ],
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Noctuacraft"
-      },
-      "url": "https://noctuacraft.com.ar"
     }
-  ]
-}
-</script>
-
-
-
+    </script>
 
     <!-- Fuentes -->
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 
 <body>
-    <!-- Pantalla de carga optimizada -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo"> 
-            <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
-        </div>
-        <div class="loading-text">Preparando café... 🐤</div>
-        <div class="loading-bar">
-            <div class="loading-progress" id="loadingProgress"></div>
-        </div>
-    </div>
 
     <!-- Efecto de código en el fondo (optimizado) -->
     <div class="code-effect" id="codeEffect"></div>
@@ -152,41 +139,34 @@
                 <div class="pdf-container">
                     <iframe src="" id="pdfViewer" frameborder="0"></iframe>
                 </div>
-                <a href="#" class="download-pdf-btn" id="downloadPdfBtn" download>
-                    📥 Descargar PDF
-                </a>
             </div>
         </div>
     </div>
 
     <!-- Elementos flotantes -->
-    <div class="floating-duck" id="floatingDuck" title="¡Hola! Soy Patroclo (Aparezco en la portadaaa) 🐤☕" aria-label="Pato mascota de Noctuacraft">
+    <div class="floating-duck" id="floatingDuck" title="¡Hola! Soy Patroclo 🐤☕" aria-label="Pato mascota de Noctuacraft">
         🐤
     </div>
     
-    <div class="coffee-counter">
-        <span>☕</span>
-        <span id="coffeeCount">0</span> tazas de café esta noche
-    </div>
+
 
     <!-- Header -->
     <header id="mainHeader">
         <div class="nav-container">
             <div class="logo">
                 <div class="logo-img">
-                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image"> 
+                    <img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image"> 
                 </div>
                 <span>Noctuacraft</span>
             </div>
                 
-            <!-- Navegación de escritorio -->
+            <!-- Navegación de escritorio - SIMPLIFICADA -->
             <nav class="desktop-nav">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#sobre-mi">Sobre Mí</a></li>
-                    <li><a href="#habilidades">Habilidades</a></li>
                     <li><a href="#proyectos">Proyectos</a></li>
-                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="#habilidades">Servicios</a></li>
+                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">3D</a></li>
                     <li><a href="#publicidad">Publicidad</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
@@ -199,14 +179,13 @@
                 <span></span>
             </div>
             
-            <!-- Navegación móvil -->
+            <!-- Navegación móvil - SIMPLIFICADA -->
             <nav class="mobile-nav" id="mobileNav">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#sobre-mi">Sobre Mí</a></li>
-                    <li><a href="#habilidades">Habilidades</a></li>
                     <li><a href="#proyectos">Proyectos</a></li>
-                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">Noctuacraft 3D</a></li>
+                    <li><a href="#habilidades">Servicios</a></li>
+                    <li><a href="noctuacraft-3d.html" class="nav-3d-link">3D</a></li>
                     <li><a href="#publicidad">Publicidad</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
@@ -223,31 +202,120 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- INICIO - Hero Section (TEXTO MEJORADO) -->
     <section class="hero" id="inicio">
         <div class="hero-bg">
             <div class="stars" id="stars"></div>
         </div>
         <div class="hero-content">
             <h1>Noctuacraft</h1>
-            <p>Cuando el mundo duerme, nuestras ideas despiertan. Somos desarrolladores frontend que transforman café ☕ en código bajo la luz de la luna, creando experiencias digitales que realmente importan.</p>
+            <p>Cuando el mundo duerme, tus ideas cobran vida. Creamos experiencias digitales y soluciones técnicas con un enfoque artesanal.</p>
             <div class="hero-buttons">
                 <a href="#proyectos" class="cta-button">Ver Proyectos</a>
-                <a href="https://wa.me/5491133511065?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="whatsapp-button" target="_blank" rel="noopener">
+                <a href="https://wa.me/5491140995163?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="whatsapp-button" target="_blank" rel="noopener">
                     <span>💬</span> Contactar por WhatsApp
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Sobre Mí -->
+<section id="proyectos">
+    <h2 class="section-title">Proyectos Destacados</h2>
+    <div class="projects-grid">
+        <!-- Proyecto 1 - Diseño Gráfico -->
+        <div class="project-card">
+            <div class="project-img" style="background-image: url('assets/img/Zapatilla_catalogo.svg')" role="img" aria-label="Proyecto de diseño gráfico - Catálogo de Zapatillas">
+            </div>
+            <div class="project-content">
+                <h3>Portfolio Diseño Gráfico</h3>
+                <p>Branding e Identidad Visual Integral.</p>
+                <div class="project-tags">
+                    <span class="tag">Illustrator</span>
+                    <span class="tag">Photoshop</span>
+                    <span class="tag">Figma</span>
+                    <span class="tag">Branding</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://instagram.com/Noctuacraft.web" target="_blank" style="text-decoration: none; font-weight: bold; color: #E1306C;">
+   Descubrí más diseños en @Noctuacraft.web
+</a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Proyecto 2 - Noctuacoffee -->
+        <div class="project-card">
+            <div class="project-img" style="background-image: url('https://www.circuitogastronomico.com/wp-content/uploads/2023/04/ledureau-cafecito-1024x706.jpg')" role="img" aria-label="Captura del proyecto Coffee Code Editor - editor de código con temas de café">
+            </div>
+            <div class="project-content">
+                <h3>Noctuacoffee</h3>
+                <p>Plataforma Gastronómica con Reservas.</p>
+                <div class="project-tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Proyecto 3 - Noctuavinyl -->
+        <div class="project-card">
+            <div class="project-img" style="background-image: url('https://i0.wp.com/freim.tv/wp-content/uploads/2023/01/images-31-4.jpeg')" role="img" aria-label="Captura del proyecto Stellar Portfolio - generador de portafolios con temas astronómicos">
+            </div>
+            <div class="project-content">
+                <h3>Noctuavinyl</h3>
+                <p>E-commerce de Estética Retro-Futurista.</p>
+                <div class="project-tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- SERVICIOS - TEXTO OPTIMIZADO (CON PATROCLO) -->
+    <section id="habilidades">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <h3>Desarrollo Frontend</h3>
+                <p>Interfaces modernas con HTML, CSS y JavaScript. Rápidas, prolijas y adaptables. Patroclo aprueba cada píxel 🐥.</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Desarrollo Backend</h3>
+                <p>Bases de datos, seguridad y escalabilidad con PHP/SQL.</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Diseño Gráfico</h3>
+<p>Identidades visuales, logos y piezas a medida.<br>
+    <a href="assets/Noctuacraft.pdf" target="_blank" style="font-weight: bold; color: #af1cbc; text-decoration: none;">
+        Explorar portafolio completo (PDF)
+    </a>
+</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Impresión 3D</h3>
+                <p>Piezas únicas: accesorios, figuras y prototipos. Si lo imaginás, Patroclo lo imprime 🐥.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS - TEXTO FUSIONADO Y POTENTE -->
     <section id="sobre-mi">
         <h2 class="section-title">Sobre Nosotros</h2>
         <div class="about-content">
             <div class="about-text">
-                <p>Hola 🐥, somos Noctuacraft. Nos dedicamos al <strong class="high-contrast-text">desarrollo web frontend y backend</strong> y a crear experiencias digitales que se vean bien, funcionen bien y tengan personalidad.</p>
-                <p>Nos gusta escuchar qué querés lograr y encontrar la forma más clara, práctica y estética de llevarlo a la realidad. No es solo diseño o código: es construir algo que conecte con la gente.</p>
-                <p><strong class="high-contrast-text">¿Tenés una idea, un proyecto o algo dando vueltas?</strong> Charlémoslo. Aunque sea solo una idea suelta, podemos trabajar juntos para transformarla en algo concreto.</p>
+                <p>En Noctuacraft no solo picamos código; escuchamos tu visión para transformarla en una herramienta práctica y estética. Creemos que la tecnología debe tener personalidad.</p>
             </div>
 
             <div class="coffee-mug">
@@ -262,100 +330,7 @@
         </div>
     </section>
 
-    <!-- Habilidades -->
-<section id="habilidades">
-    <h2 class="section-title">Nuestras Habilidades</h2>
-    <div class="skills-container">
-
-        <div class="skill-card">
-            <h3>Desarrollo Frontend</h3>
-            <p>Creamos interfaces modernas con HTML, CSS y JavaScript. Sitios rápidos, prolijos y pensados para verse bien en cualquier dispositivo. 
-                <br>Patroclo aprueba cada píxel 🐥.</p>
-        </div>
-
-        <div class="skill-card">
-            <h3>Desarrollo Backend</h3>
-            <p>Construimos la parte “invisible” de tu proyecto: bases de datos, lógica, formularios y paneles. Usamos PHP y SQL para que todo funcione seguro, estable y sin vueltas.</p>
-        </div>
-
-        <div class="skill-card">
-            <h3>Diseño Gráfico</h3>
-            <p>Identidades visuales, logos, flyers, posters y piezas hechas a medida. Desde marcas nuevas hasta proyectos personales que buscan estilo propio. 
-            <br>Podés <a href="assets/PDFNOCTUACRAFT.pdf" target="_blank" style="color: #8b5a2b; font-weight: 600;">ver nuestro catálogo completo acá</a>.</p>
-        </div>
-
-        <div class="skill-card">
-            <h3>Impresión 3D Personalizada</h3>
-            <p>Modelamos y fabricamos piezas únicas: accesorios, figuras, prototipos y regalos personalizados.
-                <br>Si lo imaginás, Patroclo lo imprime 🐥.</p>
-        </div>
-
-    </div>
-</section>
-
-
-    <!-- Proyectos -->
-    <section id="proyectos">
-        <h2 class="section-title">Proyectos Destacados</h2>
-        <div class="projects-grid">
-            <!-- Proyecto de Diseño Gráfico con PDF -->
-            <div class="project-card">
-                <div class="project-img" style="background-image: url('assets/img/Zapatilla_catalogo.png')" role="img" aria-label="Proyecto de diseño gráfico - Catálogo de Zapatillas">
-                </div>
-                <div class="project-content">
-                    <h3>Portfolio Diseño Gráfico</h3>
-                    <p>Colección completa de trabajos de diseño gráfico, incluyendo branding, editorial y publicidad.</p>
-                    <div class="project-tags">
-                        <span class="tag">Illustrator</span>
-                        <span class="tag">Photoshop</span>
-                        <span class="tag">Figma</span>
-                        <span class="tag">Branding</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link view-image" data-image="assets/img/Zapatilla_catalogo.png">Ver Imagen</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-img" style="background-image: url('https://www.circuitogastronomico.com/wp-content/uploads/2023/04/ledureau-cafecito-1024x706.jpg')" role="img" aria-label="Captura del proyecto Coffee Code Editor - editor de código con temas de café">
-                    <img src="" alt="">
-                </div>
-                <div class="project-content">
-                    <h3>Noctuacoffee</h3>
-                    <p>Sitio web para cafetería con diseño moderno y sistema de reservas online.</p>
-                    <div class="project-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="Noctuacoffee.html" class="project-link" target="_blank">Ver Demo</a>
-                        <a href="#" class="project-link view-code" data-project="noctuacoffee">Ver Código</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-img" style="background-image: url('https://i0.wp.com/freim.tv/wp-content/uploads/2023/01/images-31-4.jpeg')" role="img" aria-label="Captura del proyecto Stellar Portfolio - generador de portafolios con temas astronómicos">
-                </div>
-                <div class="project-content">
-                    <h3>Noctuavinyl</h3>
-                    <p>Tienda online de vinilos con diseño retro-futurista y sistema de e-commerce.</p>
-                    <div class="project-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="NOCTUAVINYL.html" class="project-link" target="_blank">Ver Demo</a>
-                        <a href="#" class="project-link view-code" data-project="noctuavinyl">Ver Código</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Publicidad -->
+    <!-- PUBLICIDAD - SIN TEXTO REDUNDANTE -->
     <section id="publicidad">
         <h2 class="section-title">Publicidad & Flyers</h2>
         <div class="advertising-grid">
@@ -363,10 +338,9 @@
             <div class="ad-item">
                 <div class="ad-video">
                     <video controls playsinline>
-                        <source src="assets/videos/Noctuacraft.mp4" type="video/mp4">
+                        <source src="assets/videos/Noctuacraft.webm" type="video/webm">
                         Tu navegador no soporta el elemento video.
                     </video>
-                    <div class="media-type">🎥 VIDEO</div>
                 </div>
                 <div class="ad-content">
                     <h3>Noctuacraft</h3>
@@ -377,11 +351,10 @@
 
             <!-- IMAGEN -->
             <div class="ad-item">
-                <div class="ad-image" style="background-image: url('assets/img/FlyerNoctuacraft.png')">
-                    <div class="media-type">📷 IMAGEN</div>
+                <div class="ad-image" style="background-image: url('assets/img/FlyerNoctuacraft.svg')">
                 </div>
                 <div class="ad-content">
-                    <h3>Noctuacraft - Diseño Gráfico</h3>
+                    <h3>Diseño Gráfico</h3>
                     <p>Flyer promocional para lanzamiento de temporada</p>
                     <span class="ad-date">Octubre 2024</span>
                 </div>
@@ -390,13 +363,12 @@
             <div class="ad-item">
                 <div class="ad-video">
                     <video controls playsinline>
-                        <source src="assets/videos/Noctuacraft2.mp4" type="video/mp4">
+                        <source src="assets/videos/Noctuacraft2.webm" type="video/webm">
                         Tu navegador no soporta el elemento video.
                     </video>
-                    <div class="media-type">🎥 VIDEO</div>
                 </div>
                 <div class="ad-content">
-                    <h3>Noctuacraft - Desarrollo Web</h3>
+                    <h3>Desarrollo Web</h3>
                     <p>Noctuacraft: Tus ideas, al Internet</p>
                     <span class="ad-date">Octubre 2025</span>
                 </div>
@@ -404,7 +376,7 @@
         </div>
     </section>
 
-    <!-- Contacto -->
+    <!-- CONTACTO - LIMPIO, SIN INFORMACIÓN DE RELLENO -->
     <section id="contacto">
         <h2 class="section-title">Trabajemos Juntos</h2>
         <div class="contact-container">
@@ -413,24 +385,10 @@
                     <div class="whatsapp-icon">💬</div>
                     <div>
                         <h3>WhatsApp</h3>
-                        <p>Contáctanos directamente por WhatsApp para una respuesta rápida</p>
+                        <p>Contáctanos directamente para una respuesta rápida</p>
                         <a href="https://wa.me/5491140995163?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="whatsapp-button" target="_blank" rel="noopener" style="margin-top: 10px; display: inline-block;">
                             Enviar mensaje
                         </a>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">🌙</div>
-                    <div>
-                        <h3>Horario</h3>
-                        <p>A disposición del cliente</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">💼</div>
-                    <div>
-                        <h3>Disponibilidad</h3>
-                        <p>Abierto a proyectos freelance y colaboraciones</p>
                     </div>
                 </div>
             </div>
@@ -452,44 +410,29 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - LIMPIO -->
     <footer>
         <div class="footer-content">
             <div class="logo">
                 <div class="logo-img">
-                    <img src="assets/img/Logo2.png" alt="Logo de Noctuacraft" class="logo-image">
+                    <img src="assets/img/Logo2.svg" alt="Logo de Noctuacraft" class="logo-image">
                 </div>
                 <span>Noctuacraft</span>
             </div>
             <p>Donde las ideas cobran vida bajo la luz de la luna</p>
             <div class="social-links">
-<a href="https://instagram.com/Noctuacraft.web" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="Instagram de Noctuacraft">
-    <i class="fab fa-instagram"></i>
-</a>
-
-<a href="https://www.facebook.com/profile.php?id=61581769076622" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="Facebook de Noctuacraft">
-    <i class="fab fa-facebook"></i>
-</a>
-
-<a href="https://wa.me/5491140995163?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" 
-   class="social-link" 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="WhatsApp de Noctuacraft">
-    <i class="fab fa-whatsapp"></i>
-</a>
+                <a href="https://instagram.com/Noctuacraft.web" class="social-link" target="_blank" rel="noopener" aria-label="Instagram de Noctuacraft">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61581769076622" class="social-link" target="_blank" rel="noopener" aria-label="Facebook de Noctuacraft">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://wa.me/5491140995163?text=¡Hola!%20Me%20interesa%20trabajar%20contigo%20en%20un%20proyecto" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp de Noctuacraft">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
             </div>
             <p class="copyright">
-                &copy;  2025 - <span id="year"></span> Noctuacraft. Todos los derechos reservados.
-                Fundado por Frederick Joaquín Riedel Padilla.
+                &copy; 2025 - <span id="year"></span> Noctuacraft. Todos los derechos reservados.
             </p>
         </div>
     </footer>

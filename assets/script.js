@@ -17,7 +17,6 @@ const noctuacoffee = {
         this.setupReservations();
         this.initGallery();
         this.setupAnimations();
-        console.log('🦆 Noctuacoffee inicializado con éxito!');
     },
 
     // Cargar menú desde API
@@ -190,7 +189,6 @@ class VinylStore {
         this.renderProducts();
         this.updateCartUI();
         
-        console.log('🎵 Noctuavinyl store initialized!');
     }
 
     // Cargar productos desde API
@@ -379,7 +377,7 @@ class VinylStore {
     // Notificación de producto agregado
     showCartNotification(productName) {
         // Implementar notificación bonita
-        console.log(\`✅ "\${productName}" agregado al carrito!\`);
+        (\`✅ "\${productName}" agregado al carrito!\`);
     }
 
     // Configurar event listeners
@@ -413,29 +411,6 @@ const vinylStore = new VinylStore();`
 
 // Año actual para el copyright
 document.getElementById("year").textContent = new Date().getFullYear();
-
-// Pantalla de carga optimizada
-function simulateLoading() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    const loadingProgress = document.getElementById('loadingProgress');
-    let progress = 0;
-    
-    const interval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }, 300);
-        }
-        loadingProgress.style.width = `${progress}%`;
-    }, 200);
-}
 
 // Crear estrellas en el fondo (optimizado para móviles)
 function createStars() {
@@ -996,13 +971,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Console log de bienvenida
-    console.log(`
-    🐥 ¡Bienvenido a Noctuacraft! 
-    ☕ Donde el café se transforma en código
-    🌙 Trabajando mientras el mundo duerme...
-    
-    ¿Tenés un proyecto en mente? ¡Hablemos!
-    `);
 });
 
 // Manejar redimensionado de ventana
