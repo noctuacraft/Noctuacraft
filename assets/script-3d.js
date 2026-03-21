@@ -351,3 +351,42 @@ window.addEventListener('keydown', (e) => {
         buffer = "";
     }
 });
+
+
+    // Función para manejar el scroll después de que todo esté cargado
+    function handleAnchorScroll() {
+        // Verificar si hay un hash en la URL
+        if (window.location.hash) {
+            const targetId = window.location.hash.substring(1); // Quita el #
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Pequeño retraso para asegurar que todo está renderizado
+                setTimeout(() => {
+                    const offset = 80; // Altura del header fijo
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 500);
+            }
+        }
+    }
+    
+    // Esperar a que Firebase cargue los datos
+    const checkFirebaseLoaded = setInterval(() => {
+        // Verificar si la galería tiene contenido (Firebase ya cargó)
+        const galleryContainer = document.getElementById('dynamicGallery');
+        if (galleryContainer && galleryContainer.children.length > 0 && !galleryContainer.innerHTML.includes('No hay productos')) {
+            clearInterval(checkFirebaseLoaded);
+            handleAnchorScroll();
+        }
+    }, 100);
+    
+    // También ejecutar cuando la página termine de cargar
+    window.addEventListener('load', () => {
+        setTimeout(handleAnchorScroll, 300);
+    });
