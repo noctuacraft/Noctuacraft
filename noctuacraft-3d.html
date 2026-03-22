@@ -90,6 +90,22 @@
             margin-top: 5px;
             display: block;
         }
+        
+        /* Ajuste para las meta etiquetas */
+        .print-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+            justify-content: center;
+        }
+        .print-price {
+            background: rgba(114, 9, 183, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -391,8 +407,6 @@ function createPrintCard(id, product) {
     const imgSrc = product.img || 'assets/img/Noctuacraft3D/default.jpg';
     const titulo = product.nombre || 'Producto 3D';
     const descripcion = product.descripcion || `Modelo 3D de categoría ${product.categoria || 'general'}`;
-    const tiempo = product.tiempo || '2-4 horas';
-    const material = product.material || 'PLA';
     const precio = product.precio || 'Consultar';
     
     card.innerHTML = `
@@ -402,9 +416,7 @@ function createPrintCard(id, product) {
             <h3 class="print-title">${escapeHtml(titulo)}</h3>
             <p class="print-desc">${escapeHtml(descripcion.substring(0, 100))}${descripcion.length > 100 ? '...' : ''}</p>
             <div class="print-meta">
-                <span class="print-time">Tiempo de impresión: <br>${tiempo}</span>
-                <span class="print-material">Material: ${material}</span>
-                <span class="print-price">Precio: $${precio}</span>
+                <span class="print-price">$${escapeHtml(precio.toString())}</span>
             </div>
             <span class="print-more">Ver detalles →</span>
         </div>
@@ -543,10 +555,8 @@ function openModal(product) {
     const modalDetails = document.getElementById('modalDetails');
     modalDetails.innerHTML = '';
     
+    // Solo mostramos categoría y precio (sin material, peso ni tiempo)
     const details = [
-        { label: 'Tiempo de impresión', value: product.tiempo || '2-4 horas' },
-        { label: 'Material usado', value: product.material || 'PLA' },
-        { label: 'Peso aproximado', value: product.peso ? `${product.peso}g` : 'Consultar' },
         { label: 'Categoría', value: getCategoryName(product.categoria) },
         { label: 'Precio', value: `$${product.precio || 'Consultar'}` }
     ];
@@ -626,7 +636,7 @@ function setupQuoteSystem() {
     if (urgencySelect && urgencyNote) {
         urgencySelect.addEventListener('change', () => {
             if (urgencySelect.value === 'express') {
-                urgencyNote.textContent = '⚠️ El envío Express tiene un cargo adicional por prioridad de producción. Se le informará el monto al cotizar.';
+                urgencyNote.textContent = 'El envío Express tiene un cargo adicional por prioridad de producción. Se le informará el monto al cotizar.';
                 urgencyNote.style.color = '#e67e22';
             } else {
                 urgencyNote.textContent = '';
